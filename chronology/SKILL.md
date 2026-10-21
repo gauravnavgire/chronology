@@ -1,6 +1,6 @@
 ---
 name: chronology
-description: Builds a chronology from any text (notes, PDFs, books, articles, DB data) at a chosen granularity and layout; merges sources, flags conflicts and timeline contradictions.
+description: Builds a chronology from any text or data at a chosen granularity and layout; merges sources, flags contradictions. Use to check if dates add up, time between events, Old Style/Samvat dates.
 dependencies: python>=3.9 (standard library only; optional)
 license: MIT
 ---

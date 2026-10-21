@@ -129,7 +129,7 @@ Ticket closed.
      ev("reported", "2025-06-02T04:00Z", "2025-06-02T05:30Z", ["priya", "report", "look"], must=False),
      ev("diagnosed", "2025-06-02T15:00Z", "2025-06-02T16:00Z", ["disk", "full", "space"]),
      ev("rerun-done", "2025-06-03T09:00Z", "2025-06-03T10:00Z", ["rerun", "finished"]),
-     ev("in-bucket", "2025-06-03T09:00Z", "2025-06-03T15:30Z", ["bucket"], must=False),
+     ev("in-bucket", "2025-06-03T09:00Z", "2025-06-03T15:30Z", ["bucket", "deliver"], must=False),
      ev("signed-off", "2025-06-03T06:00Z", "2025-06-03T13:00Z", ["sign"], vague=True),
      ev("closed", "2025-06-03T18:00Z", "2025-06-04T04:00Z", ["closed"])],
     expect={"layout": "table", "granularity": "hour"})
@@ -350,7 +350,7 @@ Family record — Sharma family, Ujjain
 - Every year on Diwali we light a lamp for Dadaji.
 """},
     [ev("born", _iso(_born[1] - 1), _iso(_born[2]), ["born"]),
-     ev("married", _iso(_married[1] - 1), _iso(_married[2]), ["married"]),
+     ev("married", _iso(_married[1] - 1), _iso(_married[2]), ["marri"]),
      ev("griha-pravesh", _iso(_house[1] - 1), _iso(_house[2]), ["griha", "house"])],
     note="Gold dates for this case were computed with the skill's own panchang code "
          "(validated separately against published timings), +/-1 day; the case tests "

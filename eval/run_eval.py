@@ -27,9 +27,15 @@ import time
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SKILL = os.path.normpath(os.path.join(HERE, "..", "chronology"))
-TOOLS = ["Skill", "Read", "Write", "Edit", "Glob", "Grep",
-         "Bash(python:*)", "Bash(python3:*)", "Bash(py:*)", "Bash(ls:*)",
-         "Bash(mkdir:*)", "Bash(pdftotext:*)"]
+# Python and harmless folder commands only, in both shells (Claude Code on
+# Windows often runs commands through PowerShell). Everything else is denied.
+_SHELL_OK = ["python", "python3", "py", "ls", "mkdir", "cat", "cd", "head", "wc",
+             "pdftotext"]
+_PS_OK = ["python", "py", "ls", "dir", "mkdir", "cd", "Get-ChildItem", "Get-Content",
+          "New-Item", "Set-Location", "Select-Object", "Measure-Object"]
+TOOLS = (["Skill", "Read", "Write", "Edit", "Glob", "Grep"]
+         + ["Bash(%s:*)" % c for c in _SHELL_OK]
+         + ["PowerShell(%s:*)" % c for c in _PS_OK])
 
 
 def install(run_dir, inputs_dir=None):

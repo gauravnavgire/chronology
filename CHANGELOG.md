@@ -1,5 +1,19 @@
 # Changelog
 
+## v1.0.1: triggers more reliably
+
+- **Skill description** now also names when to use the skill: checking whether
+  dates add up, finding the time between events, and Old Style or Samvat
+  dates. In testing with headless Claude Code, the skill was used for 4 of 6
+  prompts that should trigger it (previously 2 of 6), and for none of 6
+  unrelated prompts. Each prompt ran once, so treat these as indicative.
+- **Evaluation kit** fixes from the first full run:
+  - support for PowerShell
+  - follows script paths stored in variables
+  - counts refused commands separately
+  - stops a batch when the usage limit is hit
+  - two answer-key keywords corrected
+
 ## v1.0.0: first public release
 
 - **Skill:** a six-step workflow (read the request, ingest, extract, run the

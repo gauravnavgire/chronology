@@ -42,28 +42,40 @@ TABLE_OPTS = {"--date-col": "date_col", "--end-col": "end_col", "--title-col": "
               "--entity-col": "entity_col", "--tag-col": "tag_col", "--sql": "sql",
               "--table": "table"}
 LAYOUT_HINTS = {"tree": "├──", "table": "|---", "bullets": "\n- ", "timeline": "◆"}
+SHELL_TOOLS = ("Bash", "PowerShell")
 
 
 # ---------------------------------------------------------------- transcript
 
 def read_transcript(run_dir):
+    """Tool calls (with whether each was refused), text and the final result."""
     tools, texts, final, cost, turns, error = [], [], "", None, None, None
     path = os.path.join(run_dir, "transcript.jsonl")
     if not os.path.exists(path):
-        return {"tools": [], "text": "", "final": "", "cost": None, "turns": None,
-                "error": "no transcript"}
+        return {"tools": [], "executed": [], "denied": [], "text": "", "final": "",
+                "cost": None, "turns": None, "error": "no transcript"}
+    by_id, denied_ids = {}, set()
     for line in io.open(path, encoding="utf-8", errors="replace"):
         try:
             msg = json.loads(line)
         except ValueError:
             continue
-        if msg.get("type") == "assistant":
-            for block in msg.get("message", {}).get("content", []) or []:
-                if block.get("type") == "tool_use":
-                    tools.append((block.get("name"), block.get("input") or {}))
-                elif block.get("type") == "text":
+        body = msg.get("message")
+        blocks = body.get("content") if isinstance(body, dict) else None
+        if isinstance(blocks, list):
+            for block in blocks:
+                if not isinstance(block, dict):
+                    continue
+                if msg.get("type") == "assistant" and block.get("type") == "tool_use":
+                    call = (block.get("name"), block.get("input") or {})
+                    tools.append(call)
+                    by_id[block.get("id")] = call
+                elif msg.get("type") == "assistant" and block.get("type") == "text":
                     texts.append(block.get("text", ""))
-        elif msg.get("type") == "result":
+                elif block.get("type") == "tool_result" and block.get("is_error") and \
+                        "denied" in str(block.get("content", "")).lower():
+                    denied_ids.add(block.get("tool_use_id"))
+        if msg.get("type") == "result":
             final = msg.get("result") or ""
             cost = msg.get("total_cost_usd", msg.get("cost_usd"))
             turns = msg.get("num_turns")
@@ -71,25 +83,40 @@ def read_transcript(run_dir):
                 error = final[:200] or msg.get("subtype") or "error"
     if not final and not tools and error is None:
         error = "session produced no result"
-    return {"tools": tools, "text": "\n".join(texts + [final]), "final": final,
+    denied = [by_id[i] for i in denied_ids if i in by_id]
+    executed = [t for t in tools if not any(t is d for d in denied)]
+    return {"tools": tools, "executed": executed, "denied": denied,
+            "text": "\n".join(texts + [final]), "final": final,
             "cost": cost, "turns": turns, "error": error}
 
 
+# "$S = '.../chronology.py'" (PowerShell) or "S=.../chronology.py" (sh)
+ASSIGN_RE = re.compile(r"""^\s*\$?(\w+)\s*=\s*["']?([^"'\s;]*chronology\.py)["']?\s*$""")
+
+
 def script_commands(tools):
-    """chronology.py invocations: lists of argv after the script path."""
+    """chronology.py invocations (direct or via a variable holding its path):
+    lists of argv after the script."""
     out = []
     for name, inp in tools:
-        if name != "Bash":
+        if name not in SHELL_TOOLS:
             continue
-        cmd = inp.get("command", "")
-        for seg in re.split(r"&&|\|\||;|\|", cmd):
-            if "chronology.py" not in seg:
+        # Windows paths: "\" is a separator, not an escape character.
+        cmd = inp.get("command", "").replace("\\", "/")
+        aliases = set()
+        for seg in re.split(r"&&|\|\||;|\||\n", cmd):
+            m = ASSIGN_RE.match(seg)
+            if m:
+                aliases.update({"$" + m.group(1), "${%s}" % m.group(1)})
+                continue
+            if "chronology.py" not in seg and not any(a in seg for a in aliases):
                 continue
             try:
                 toks = shlex.split(seg, posix=True)
             except ValueError:
                 toks = seg.split()
-            idx = next((i for i, t in enumerate(toks) if t.endswith("chronology.py")), None)
+            idx = next((i for i, t in enumerate(toks)
+                        if t.endswith("chronology.py") or t in aliases), None)
             if idx is not None:
                 out.append(toks[idx + 1:])
     return out
@@ -246,17 +273,23 @@ def score_case(run_dir, gold):
     tr = read_transcript(run_dir)
     if tr["error"]:  # the session failed: not a measurement of the skill
         return {"case": gold["id"], "error": tr["error"], "cost_usd": tr["cost"]}
-    cmds = script_commands(tr["tools"])
+    all_cmds = script_commands(tr["tools"])        # includes refused attempts
+    cmds = script_commands(tr["executed"])         # actually executed
+    refused = script_commands(tr["denied"])
     skills = [inp.get("skill", "") for name, inp in tr["tools"] if name == "Skill"]
     reads = [inp.get("file_path", "") for name, inp in tr["tools"] if name == "Read"]
-    files, extracted, issues, source = load_extracted(run_dir, cmds)
+    # Extraction is scored from the files Claude wrote, even if running the
+    # script on them was refused (that refusal is a harness/permission matter).
+    files, extracted, issues, source = load_extracted(run_dir, all_cmds)
     s = {"case": gold["id"], "source": source,
          "triggered": any("chronology" in x for x in skills), "skills": skills,
          "references_read": sorted({os.path.basename(r) for r in reads
                                     if "references" in r.replace("\\", "/")}),
-         "script": bool(cmds), "verify": any("--verify" in a for a in cmds),
+         "script": bool(cmds), "script_refused": len(refused),
+         "verify": any("--verify" in a for a in cmds),
+         "verify_attempted": any("--verify" in a for a in all_cmds),
          "tests_run": any("unittest" in inp.get("command", "") for n, inp in tr["tools"]
-                          if n == "Bash"),
+                          if n in SHELL_TOOLS),
          "cost_usd": tr["cost"], "turns": tr["turns"]}
     gold_events = gold["events"]
     matched, dated = match(gold_events, extracted)
@@ -395,6 +428,9 @@ def report(batch_dir):
                   "| Skill triggered | %s |" % rate("triggered"),
                   "| Ran the script | %s |" % rate("script"),
                   "| Ran the self-check (--verify) | %s |" % rate("verify"),
+                  "| Attempted the self-check (incl. refused) | %s |" % rate("verify_attempted"),
+                  "| Cases with script runs refused by permissions | %d |" % sum(
+                      1 for x in cases if x.get("script_refused")),
                   "| Recall, all gold events (mean) | %s |" % _mean([x["recall"] for x in cases]),
                   "| Recall, must-have events (mean) | %s |" % _mean([x["recall_must"] for x in cases]),
                   "| Precision (mean) | %s |" % _mean([x["precision"] for x in cases]),
