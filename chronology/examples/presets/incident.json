@@ -1,0 +1,13 @@
+{
+  "title": "Checkout outage, 3 June 2025",
+  "source_document": "incident-channel-export.txt",
+  "events": [
+    {"id": "deploy", "date": "2025-06-03T14:02:11Z", "title": "Deploy of payments v2.14 starts", "tags": ["payments"], "source": "line 12"},
+    {"id": "errors", "date": "2025-06-03T14:06:40Z", "title": "5xx rate on /checkout rises above 20%", "tags": ["checkout"], "source": "line 19"},
+    {"id": "page", "date": "2025-06-03T14:09:02Z", "title": "On-call paged", "tags": ["oncall"], "after": "errors", "source": "line 23"},
+    {"id": "db", "date": "2025-06-03T14:05:00Z", "title": "Database connection pool exhausted", "tags": ["database"], "hedged": true, "details": "Engineer: 'probably started around 14:05'", "source": "line 31"},
+    {"id": "rollback", "date": "2025-06-03T14:21:37Z", "title": "Rollback to v2.13 started", "tags": ["payments"], "source": "line 44"},
+    {"id": "recover", "date": "2025-06-03T14:27:05Z", "title": "Error rate back to baseline", "tags": ["checkout"], "offset": {"from": "rollback", "by": "5min"}, "source": "line 52"},
+    {"id": "allclear", "date": "2025-06-03T14:40Z", "title": "All-clear posted", "tags": ["oncall"], "source": "line 60"}
+  ]
+}

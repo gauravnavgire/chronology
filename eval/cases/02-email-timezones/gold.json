@@ -1,0 +1,103 @@
+{
+ "id": "02-email-timezones",
+ "prompt": "Build a timeline of what happened in this email thread, down to the hour, as a table. Times in UTC please.",
+ "inputs": [
+  "thread.txt"
+ ],
+ "should_trigger": true,
+ "events": [
+  {
+   "key": "failed",
+   "window": [
+    "2025-06-01T17:00Z",
+    "2025-06-01T18:00Z"
+   ],
+   "keywords": [
+    "fail"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "reported",
+   "window": [
+    "2025-06-02T04:00Z",
+    "2025-06-02T05:30Z"
+   ],
+   "keywords": [
+    "priya",
+    "report",
+    "look"
+   ],
+   "must": false,
+   "vague": false
+  },
+  {
+   "key": "diagnosed",
+   "window": [
+    "2025-06-02T15:00Z",
+    "2025-06-02T16:00Z"
+   ],
+   "keywords": [
+    "disk",
+    "full",
+    "space"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "rerun-done",
+   "window": [
+    "2025-06-03T09:00Z",
+    "2025-06-03T10:00Z"
+   ],
+   "keywords": [
+    "rerun",
+    "finished"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "in-bucket",
+   "window": [
+    "2025-06-03T09:00Z",
+    "2025-06-03T15:30Z"
+   ],
+   "keywords": [
+    "bucket"
+   ],
+   "must": false,
+   "vague": false
+  },
+  {
+   "key": "signed-off",
+   "window": [
+    "2025-06-03T06:00Z",
+    "2025-06-03T13:00Z"
+   ],
+   "keywords": [
+    "sign"
+   ],
+   "must": true,
+   "vague": true
+  },
+  {
+   "key": "closed",
+   "window": [
+    "2025-06-03T18:00Z",
+    "2025-06-04T04:00Z"
+   ],
+   "keywords": [
+    "closed"
+   ],
+   "must": true,
+   "vague": false
+  }
+ ],
+ "expect": {
+  "layout": "table",
+  "granularity": "hour"
+ }
+}

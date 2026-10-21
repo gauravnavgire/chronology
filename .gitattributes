@@ -1,0 +1,12 @@
+# Normalise text files to LF in the repository.
+* text=auto
+
+# iCalendar requires CRLF line endings (RFC 5545): store byte-for-byte.
+*.ics -text
+
+# Binary files.
+*.db binary
+*.sqlite binary
+*.jpg binary
+*.png binary
+*.zip binary

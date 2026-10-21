@@ -1,0 +1,81 @@
+{
+ "id": "07-project-slippage",
+ "prompt": "Which milestones in these status reports slipped, and by how much? Give me a week-level timeline too.",
+ "inputs": [
+  "status-reports.md"
+ ],
+ "should_trigger": true,
+ "events": [
+  {
+   "key": "kickoff",
+   "window": [
+    "2025-01-06",
+    "2025-01-06"
+   ],
+   "keywords": [
+    "kick"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "design",
+   "window": [
+    "2025-02-14",
+    "2025-02-14"
+   ],
+   "keywords": [
+    "design"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "api",
+   "window": [
+    "2025-03-21",
+    "2025-03-21"
+   ],
+   "keywords": [
+    "api"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "content",
+   "window": [
+    "2025-03",
+    "2025-03"
+   ],
+   "keywords": [
+    "content",
+    "migration"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "launch",
+   "window": [
+    "2025-05-02",
+    "2025-05-02"
+   ],
+   "keywords": [
+    "launch"
+   ],
+   "must": true,
+   "vague": false
+  }
+ ],
+ "expect": {
+  "behaviours": [
+   "planned"
+  ],
+  "answer_patterns": [
+   "(?i)launch[\\s\\S]{0,300}(21 days|3 weeks|three weeks)",
+   "(?i)design[\\s\\S]{0,300}(7 days|1 week|one week)",
+   "(?i)api[\\s\\S]{0,300}(early|ahead)"
+  ]
+ }
+}

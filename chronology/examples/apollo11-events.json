@@ -1,0 +1,15 @@
+{
+  "title": "Apollo 11 Mission",
+  "source_document": "examples/apollo11-notes.md",
+  "events": [
+    {"date": "1969-07-20T20:17:40Z", "title": "Eagle lands in the Sea of Tranquility", "details": "Armstrong: \"The Eagle has landed.\"", "source": "para 4"},
+    {"date": "1969-07-16T13:32Z", "title": "Saturn V launches from LC-39A", "details": "Crew: Armstrong, Aldrin, Collins", "source": "para 2"},
+    {"date": "1961-05-25", "title": "Kennedy commits to a Moon landing", "details": "Address to Congress on urgent national needs", "source": "para 1"},
+    {"date": "1969-07-21T02:56:15Z", "title": "Armstrong steps onto the lunar surface", "details": "\"One small step for [a] man...\"", "source": "para 5"},
+    {"date": "1969-07-21T17:54Z", "title": "Eagle ascent stage lifts off the Moon", "details": "", "source": "para 6"},
+    {"date": "1969-07-24T16:50:35Z", "title": "Columbia splashes down in the Pacific", "details": "Recovered by USS Hornet", "source": "para 7"},
+    {"date": "1969-07", "title": "Worldwide TV audience of ~600 million", "approximate": true, "details": "Estimate; month only", "source": "para 8"},
+    {"date": "1969-07-24", "end": "1969-08-10", "title": "Crew in quarantine", "derived": true, "details": "End derived: text says '17 days in quarantine after splashdown' (24 Jul + 17 d)", "source": "para 7"},
+    {"date": null, "title": "Plaque left on the Moon", "details": "No date given in source", "source": "para 9"}
+  ]
+}

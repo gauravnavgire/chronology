@@ -1,0 +1,20 @@
+# Evaluation runs: transcripts contain local paths and session details
+eval/runs/
+
+# Build artefact: attached to GitHub releases instead (see .github/workflows/release.yml)
+chronology.zip
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Local Claude Code state
+.claude/settings.local.json

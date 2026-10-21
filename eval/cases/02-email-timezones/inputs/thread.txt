@@ -1,0 +1,34 @@
+From: Priya Nair (Bengaluru)
+Date: Mon, 2 Jun 2025 10:15 +0530
+Subject: Q2 data export
+
+Hi Mark, the export job failed again last night, around 11. Can you take a look?
+
+----
+From: Mark Ellis (San Francisco)
+Date: Mon, 2 Jun 2025 08:30 -0700
+Subject: Re: Q2 data export
+
+Looking now. It failed at 23:04 IST: the disk on db-2 was full. I'll clear some space
+and rerun tonight.
+
+----
+From: Mark Ellis
+Date: Tue, 3 Jun 2025 07:55 -0700
+Subject: Re: Q2 data export
+
+The rerun finished at 02:10 PDT. The export is in the bucket.
+
+----
+From: Priya Nair
+Date: Tue, 3 Jun 2025 21:05 +0530
+Subject: Re: Q2 data export
+
+Thanks! The client signed off this afternoon. I'll close the ticket tomorrow.
+
+----
+From: Priya Nair
+Date: Wed, 4 Jun 2025 09:00 +0530
+Subject: Re: Q2 data export
+
+Ticket closed.

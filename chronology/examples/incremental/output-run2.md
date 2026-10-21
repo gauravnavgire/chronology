@@ -1,0 +1,35 @@
+## Smith case
+
+| # | When | Exact date | Event | Confidence | Details | Source |
+|---|---|---|---|---|---|---|
+| 1 | 2 Mar 1950 | 2 Mar 1950 | Smith born | high |  | 2 sources: p1 · witness.txt; row 1 · police-log.csv |
+| 2 | 1970s | 1970s, between 1975 and 1979 | Smith marries [new] [low confidence] | low |  | p7 · witness.txt |
+| 3 | 1990 | 1990 | Smith tweets [new] [low confidence] | low |  | p6 · witness.txt |
+| 4 | 11 Jun 1998 | 11 Jun 1998 | Report filed [new] | medium |  | row 42 · police-log.csv |
+| 5 | 12 Jun 1998 | 12 Jun 1998 14:02 | ⚠ Smith meets Jones [date was 12 Jun 1998 15:00] | medium |  | 2 sources: p3 · witness.txt; row 41 · police-log.csv |
+| 6 | 15 Jun 1998 | 15 Jun 1998 | Phone call [new] | medium |  | p4 · witness.txt |
+| 7 | 19 Jun 1998 | 19 Jun 1998 | Follow-up visit [derived date] [new] | high | date derived: +7 days from 'Smith meets Jones' | row 43 · police-log.csv |
+| 8 | 10 May 2001 | 10 May 2001 | Smith dies | high |  | p2 · witness.txt |
+| 9 | 2003 | 2003 | Letter signed by Smith [new] | medium |  | p5 · witness.txt |
+
+Changes since last run (2026-10-21T11:08:11):
+- 6 new event(s): 'Smith marries' (1970s, between 1975 and 1979); 'Smith tweets' (1990); 'Report filed' (11 Jun 1998); 'Phone call' (15 Jun 1998); 'Follow-up visit' (19 Jun 1998); 'Letter signed by Smith' (2003)
+- date changed: 'Smith meets Jones': 12 Jun 1998 15:00 → 12 Jun 1998 14:02
+- now backed by 2 sources (was 1): 'Smith born'
+- now backed by 2 sources (was 1): 'Smith meets Jones'
+- sources now disagree on 'Smith meets Jones'
+- new issue: ERROR [anachronism] 'Smith tweets' (1990) is before Mar 2006, the earliest it could be: Twitter launched March 2006
+- new issue: ERROR [offset] 'Phone call' (15 Jun 1998) is stated, but +2 days from 'Smith meets Jones' (12 Jun 1998 14:02) gives 14 Jun 1998
+- new issue: ERROR [order] 'Report filed' (11 Jun 1998) should be after 'Smith meets Jones' (12 Jun 1998 14:02) but is entirely before it
+- new issue: WARNING [conflict] 'Smith meets Jones' - sources disagree: p3 · witness.txt: 12 Jun 1998 14:02; row 41 · police-log.csv: 12 Jun 1998 14:10
+- new issue: WARNING [lifespan] 'Letter signed by Smith' (2003) involves Smith after 'Smith dies' (10 May 2001) (posthumous or legacy?)
+- witness.txt: extracted through p7 (was p3)
+- new source: police-log.csv (extracted through row 43)
+
+Consistency report:
+- ERROR [anachronism] 'Smith tweets' (1990) is before Mar 2006, the earliest it could be: Twitter launched March 2006
+- ERROR [order] 'Report filed' (11 Jun 1998) should be after 'Smith meets Jones' (12 Jun 1998 14:02) but is entirely before it
+- ERROR [offset] 'Phone call' (15 Jun 1998) is stated, but +2 days from 'Smith meets Jones' (12 Jun 1998 14:02) gives 14 Jun 1998
+- WARNING [conflict] 'Smith meets Jones' - sources disagree: p3 · witness.txt: 12 Jun 1998 14:02; row 41 · police-log.csv: 12 Jun 1998 14:10
+- WARNING [lifespan] 'Letter signed by Smith' (2003) involves Smith after 'Smith dies' (10 May 2001) (posthumous or legacy?)
+- INFO [legend] ⚠ marks events whose sources disagree on the date.

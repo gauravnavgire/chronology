@@ -1,0 +1,53 @@
+{
+ "id": "09-panchang-family-record",
+ "prompt": "This is from our family record book (bahi), in Ujjain. Convert the Samvat dates and put the family events in order.",
+ "inputs": [
+  "bahi.md"
+ ],
+ "should_trigger": true,
+ "events": [
+  {
+   "key": "born",
+   "window": [
+    "1984-04-08",
+    "1984-04-11"
+   ],
+   "keywords": [
+    "born"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "married",
+   "window": [
+    "2008-04-21",
+    "2008-04-24"
+   ],
+   "keywords": [
+    "married"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "griha-pravesh",
+   "window": [
+    "2023-07-21",
+    "2023-07-24"
+   ],
+   "keywords": [
+    "griha",
+    "house"
+   ],
+   "must": true,
+   "vague": false
+  }
+ ],
+ "note": "Gold dates for this case were computed with the skill's own panchang code (validated separately against published timings), +/-1 day; the case tests whether Claude writes panchang-prefixed dates, not the conversion itself.",
+ "expect": {
+  "behaviours": [
+   "panchang"
+  ]
+ }
+}

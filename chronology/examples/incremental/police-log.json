@@ -1,0 +1,37 @@
+{
+ "source_document": "police-log.csv",
+ "events": [
+  {
+   "id": "meet",
+   "date": "1998-06-12T14:10",
+   "title": "Meeting Smith/Jones",
+   "source": "row 41"
+  },
+  {
+   "id": "report",
+   "date": "1998-06-11",
+   "title": "Report filed",
+   "after": [
+    "meet"
+   ],
+   "source": "row 42"
+  },
+  {
+   "date": null,
+   "id": "followup",
+   "title": "Follow-up visit",
+   "offset": {
+    "from": "meet",
+    "by": "1w"
+   },
+   "source": "row 43"
+  },
+  {
+   "id": "born",
+   "date": "1950",
+   "title": "Smith born",
+   "source": "row 1"
+  }
+ ],
+ "extracted_through": "row 43"
+}

@@ -1,0 +1,13 @@
+{
+  "title": "Website relaunch",
+  "source_document": "status-reports.md",
+  "events": [
+    {"id": "kickoff", "date": "2025-01-06", "planned": "2025-01-06", "title": "Project kickoff", "tags": ["Management"], "source": "report 1"},
+    {"id": "design", "date": "2025-02-14", "planned": "2025-02-07", "title": "Designs signed off", "tags": ["Design"], "source": "report 3"},
+    {"id": "api", "date": "2025-03-21", "planned": "2025-03-28", "title": "New API live in staging", "tags": ["Backend"], "source": "report 5"},
+    {"id": "content", "date": "2025-03", "planned": "2025-02-28", "title": "Content migration finished", "tags": ["Content"], "details": "Report only says 'during March'", "source": "report 6"},
+    {"id": "frontend", "date": "2025-04-04", "planned": "2025-03-21", "title": "Front end feature-complete", "tags": ["Frontend"], "after": ["design", "api"], "source": "report 7"},
+    {"id": "qa", "date": "2025-04-18", "title": "QA sign-off", "tags": ["QA"], "hedged": true, "details": "PM 'believes' QA signed off that Friday", "source": "email 12"},
+    {"id": "launch", "date": "2025-05-02", "planned": "2025-04-11", "title": "Public launch", "tags": ["Management"], "after": "qa", "source": "report 9"}
+  ]
+}

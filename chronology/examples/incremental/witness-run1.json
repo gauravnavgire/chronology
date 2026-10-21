@@ -1,0 +1,42 @@
+{
+ "title": "Smith case",
+ "source_document": "witness.txt",
+ "events": [
+  {
+   "id": "born",
+   "date": "1950-03-02",
+   "title": "Smith born",
+   "entities": [
+    "Smith"
+   ],
+   "lifespan": {
+    "entity": "Smith",
+    "boundary": "start"
+   },
+   "source": "p1"
+  },
+  {
+   "id": "died",
+   "date": "2001-05-10",
+   "title": "Smith dies",
+   "entities": [
+    "Smith"
+   ],
+   "lifespan": {
+    "entity": "Smith",
+    "boundary": "end"
+   },
+   "source": "p2"
+  },
+  {
+   "id": "meet",
+   "date": "1998-06-12T15:00",
+   "title": "Smith meets Jones",
+   "entities": [
+    "Smith"
+   ],
+   "source": "p3"
+  }
+ ],
+ "extracted_through": "p3"
+}

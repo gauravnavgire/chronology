@@ -1,0 +1,118 @@
+{
+ "id": "10-bio-does-it-add-up",
+ "prompt": "Does the timeline in this short bio add up? List anything that can't be right.",
+ "inputs": [
+  "bio.md"
+ ],
+ "should_trigger": true,
+ "events": [
+  {
+   "key": "born",
+   "window": [
+    "1981-05-12",
+    "1981-05-12"
+   ],
+   "keywords": [
+    "born"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "studied",
+   "window": [
+    "1999",
+    "2003"
+   ],
+   "keywords": [
+    "studied",
+    "madrid"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "instagram",
+   "window": [
+    "2003",
+    "2003"
+   ],
+   "keywords": [
+    "instagram"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "lumen",
+   "window": [
+    "2011",
+    "2011"
+   ],
+   "keywords": [
+    "lumen",
+    "founded"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "weiss-died",
+   "window": [
+    "2015-03",
+    "2015-03"
+   ],
+   "keywords": [
+    "died",
+    "weiss"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "prize",
+   "window": [
+    "2017",
+    "2017"
+   ],
+   "keywords": [
+    "prize"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "congratulated",
+   "window": [
+    "2017",
+    "2017"
+   ],
+   "keywords": [
+    "congratulat"
+   ],
+   "must": true,
+   "vague": false
+  }
+ ],
+ "expect": {
+  "issues": [
+   {
+    "kind": "anachronism",
+    "keywords": [
+     "instagram"
+    ]
+   },
+   {
+    "kind": "lifespan",
+    "keywords": [
+     "weiss",
+     "congratulat"
+    ]
+   }
+  ],
+  "answer_patterns": [
+   "(?i)instagram[\\s\\S]{0,300}(2010|did not exist|didn't exist|launched)",
+   "(?i)(weiss|mentor)[\\s\\S]{0,300}(died|dead|death|after)"
+  ]
+ }
+}

@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Smith case</title>
+<style>
+:root{--bg:#fbfaf7;--panel:#fff;--ink:#1d1d1f;--muted:#6b6b70;--line:#e3e1db;--accent:#2f6fde;--accent-soft:#e8effc;--err:#b3261e;--err-soft:#fdecea;--warn:#8a5000;--warn-soft:#fff2db;--info:#4a5568;--info-soft:#eef0f3;--bar:#9db7ea}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141416;--panel:#1d1d20;--ink:#ececee;--muted:#9a9aa2;--line:#2e2e33;--accent:#7aa5f5;--accent-soft:#1f2a40;--err:#ff8a80;--err-soft:#3a1d1d;--warn:#ffc266;--warn-soft:#3a2c14;--info:#b8c0cc;--info-soft:#25282e;--bar:#46679f}}
+:root[data-theme="dark"]{--bg:#141416;--panel:#1d1d20;--ink:#ececee;--muted:#9a9aa2;--line:#2e2e33;--accent:#7aa5f5;--accent-soft:#1f2a40;--err:#ff8a80;--err-soft:#3a1d1d;--warn:#ffc266;--warn-soft:#3a2c14;--info:#b8c0cc;--info-soft:#25282e;--bar:#46679f}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{padding:20px 16px 8px;max-width:1140px;margin:0 auto}
+h1{font-size:1.5rem;margin:0 0 4px}
+.stats{color:var(--muted);font-size:.9rem}
+.controls{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line);padding:10px 16px}
+.row{max-width:1140px;margin:0 auto;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+select,input[type=search],button{font:inherit;color:inherit;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:5px 10px}
+input[type=search]{flex:1 1 200px;min-width:0}
+button{cursor:pointer}
+button[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+.facets{max-width:1140px;margin:8px auto 0;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.facets span{color:var(--muted);font-size:.8rem;margin-left:4px}
+.chip{font-size:.8rem;padding:1px 9px;border-radius:999px}
+main{max-width:1140px;margin:0 auto;padding:12px 16px 60px;display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:24px}
+@media (max-width:860px){main{grid-template-columns:minmax(0,1fr)}}
+.density{display:flex;align-items:flex-end;gap:2px;height:56px;margin:4px 0 18px;overflow-x:auto;border-bottom:1px solid var(--line)}
+.density button{flex:1 0 6px;min-width:6px;max-width:28px;padding:0;border:0;border-radius:3px 3px 0 0;background:var(--bar)}
+.density button:hover{background:var(--accent)}
+.period{margin:0 0 18px 6px;padding-left:18px;border-left:2px solid var(--line)}
+.period h3{margin:0 0 8px;font-size:1rem;position:relative}
+.period h3::before{content:"";position:absolute;left:-25px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--accent)}
+.period h3 small,.lanes small{color:var(--muted);font-weight:400;margin-left:6px}
+.ev{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin:0 0 8px;cursor:pointer}
+.ev.hl{outline:2px solid var(--accent);outline-offset:1px}
+.ev .when{font-size:.8rem;color:var(--muted)}
+.ev .t{font-weight:600}
+.ev .more{display:none;margin-top:8px;font-size:.9rem;cursor:auto}
+.ev.open .more{display:block}
+.ev .more p{margin:0 0 6px}
+.mark{font-weight:700;margin-right:3px}
+.badge{display:inline-block;font-size:.7rem;padding:0 6px;border-radius:6px;margin-left:6px;font-weight:600;vertical-align:1px}
+.b-err{background:var(--err-soft);color:var(--err)}.b-warn{background:var(--warn-soft);color:var(--warn)}.b-info{background:var(--info-soft);color:var(--info)}
+.more table{border-collapse:collapse;width:100%;font-size:.85rem}
+.more td{border-top:1px solid var(--line);padding:3px 8px 3px 0;vertical-align:top;overflow-wrap:anywhere}
+.more table{table-layout:fixed}
+.tagline{color:var(--muted);font-size:.8rem}
+aside section{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-bottom:14px;font-size:.88rem}
+aside h2{font-size:.95rem;margin:0 0 6px}
+.issue,.gap{padding:6px 0;border-top:1px solid var(--line);cursor:pointer}
+.issue:hover,.gap:hover{color:var(--accent)}
+.lanes{overflow-x:auto}
+.lanes table{border-collapse:separate;border-spacing:6px 0;min-width:100%}
+.lanes th{text-align:left;font-size:.85rem;color:var(--muted);padding:4px 0;border-bottom:1px solid var(--line)}
+.lanes td{vertical-align:top;min-width:200px;max-width:300px;padding-top:8px}
+body.lanes-mode main{grid-template-columns:minmax(0,1fr)}
+body.lanes-mode aside{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+body.lanes-mode aside section{margin:0}
+.lanes td.when{min-width:110px;font-weight:600;font-size:.9rem}
+.lanes .ev{margin:0 0 6px}
+.empty{color:var(--muted);padding:20px 0}
+.b-new{background:var(--accent-soft);color:var(--accent)}
+.b-low{background:var(--warn-soft);color:var(--warn)}
+.answer{margin-top:10px;padding:10px 12px;background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:8px;font-size:.92rem}
+.answer div+div{margin-top:4px}
+.told td{padding:6px 8px 6px 0;border-top:1px solid var(--line);vertical-align:top;font-size:.9rem}
+.told th{text-align:left;font-size:.8rem;color:var(--muted);padding:4px 8px 4px 0}
+.told table{border-collapse:collapse;width:100%}
+.told .mv{color:var(--accent)}
+</style>
+</head>
+<body>
+<header><h1 id="title"></h1><div class="stats" id="stats"></div><div class="answer" id="answer" hidden></div></header>
+<div class="controls">
+  <div class="row">
+    <label>Zoom <select id="level" aria-label="Granularity"></select></label>
+    <button id="v-timeline" aria-pressed="true">Timeline</button>
+    <button id="v-lanes" aria-pressed="false">Lanes</button>
+    <button id="v-told" aria-pressed="false" title="Order in which the source tells events">As told</button>
+    <select id="lane-field" aria-label="Lanes by" hidden></select>
+    <input type="search" id="q" placeholder="Search titles, details, sources…" aria-label="Search">
+    <button id="flagged" aria-pressed="false" title="Only events marked ≈, ⚠ or with issues">Flagged only</button>
+    <select id="conf" aria-label="Minimum confidence"><option value="0">Any confidence</option><option value="1">Medium or high</option><option value="2">High only</option></select>
+    <button id="theme" title="Toggle light/dark">◐</button>
+  </div>
+  <div class="facets" id="facets"></div>
+</div>
+<main>
+  <div>
+    <div class="density" id="density" aria-label="Events per period"></div>
+    <div id="view"></div>
+  </div>
+  <aside>
+    <section id="changes-sec"><h2>Changes since last run</h2><div id="changes"></div></section>
+    <section><h2>Consistency report</h2><div id="report"></div></section>
+    <section><h2>Gaps</h2><div id="gaps"></div></section>
+    <section><h2>Busiest periods</h2><div id="busy"></div></section>
+    <section id="undated-sec"><h2>Undated</h2><div id="undated"></div></section>
+    <section><h2>Legend</h2>
+      <div><span class="mark">≈</span>could have happened before the previous event</div>
+      <div><span class="mark">⚠</span>sources disagree on the date</div>
+      <div><span class="mark">[derived]</span>date computed from a relative statement</div>
+    </section>
+  </aside>
+</main>
+<script type="application/json" id="data">{"title": "Smith case", "stats": "9 events · 2 Mar 1950 → 2003 · 3 sources · 3 errors, 2 warnings", "granularity": "day", "levels": [["millennium", "Millennium"], ["century", "Century"], ["decade", "Decade"], ["year", "Year"], ["quarter", "Quarter"], ["month", "Month"], ["week", "Week"], ["day", "Day"], ["hour", "Hour"], ["minute", "Minute"]], "laneFields": ["entities", "source"], "events": [{"i": 0, "id": "born", "title": "Smith born", "details": "", "exact": "2 Mar 1950", "window": "", "precision": "day", "derived": false, "uncertain": false, "conflict": false, "sourceText": "2 sources: p1 · witness.txt; row 1 · police-log.csv", "sources": [{"doc": "witness.txt", "loc": "p1", "date": "2 Mar 1950"}, {"doc": "police-log.csv", "loc": "row 1", "date": "1950"}], "tags": [], "entities": ["Smith"], "docs": ["witness.txt", "police-log.csv"], "lanes": {"entities": ["Smith"], "source": ["witness.txt", "police-log.csv"]}, "g": {"millennium": ["millennium(1, 2)", "2nd millennium"], "century": ["century(1, 20)", "20th century"], "decade": ["decade(1, 1950)", "1950s"], "year": ["year(1950,)", "1950"], "quarter": ["quarter(1950, 1)", "Q1 1950"], "month": ["month(1950, 3)", "Mar 1950"], "week": ["week(1950, 9)", "1950-W09"], "day": ["day(1950, 3, 2)", "2 Mar 1950"], "hour": ["day(1950, 3, 2)", "2 Mar 1950"], "minute": ["day(1950, 3, 2)", "2 Mar 1950"]}, "issues": [], "change": "", "conf": "high", "confScore": 95, "confWhy": ["date precise to the day", "backed by 2 sources"], "scope": "", "quote": "", "verify": ""}, {"i": 1, "id": "wed", "title": "Smith marries", "details": "", "exact": "1970s, between 1975 and 1979", "window": "between 1975 and 1979", "precision": "decade", "derived": false, "uncertain": false, "conflict": false, "sourceText": "p7 · witness.txt", "sources": [{"doc": "witness.txt", "loc": "p7", "date": "1970s, between 1975 and 1979"}], "tags": [], "entities": [], "docs": ["witness.txt"], "lanes": {"entities": [], "source": ["witness.txt"]}, "g": {"millennium": ["millennium(1, 2)", "2nd millennium"], "century": ["century(1, 20)", "20th century"], "decade": ["decade(1, 1970)", "1970s"], "year": ["decade(1, 1970)", "1970s"], "quarter": ["decade(1, 1970)", "1970s"], "month": ["decade(1, 1970)", "1970s"], "week": ["decade(1, 1970)", "1970s"], "day": ["decade(1, 1970)", "1970s"], "hour": ["decade(1, 1970)", "1970s"], "minute": ["decade(1, 1970)", "1970s"]}, "issues": [], "change": "", "conf": "low", "confScore": 45, "confWhy": ["date precise to the decade"], "scope": "", "quote": "", "verify": ""}, {"i": 2, "id": "tweet", "title": "Smith tweets", "details": "", "exact": "1990", "window": "", "precision": "year", "derived": false, "uncertain": false, "conflict": false, "sourceText": "p6 · witness.txt", "sources": [{"doc": "witness.txt", "loc": "p6", "date": "1990"}], "tags": [], "entities": [], "docs": ["witness.txt"], "lanes": {"entities": [], "source": ["witness.txt"]}, "g": {"millennium": ["millennium(1, 2)", "2nd millennium"], "century": ["century(1, 20)", "20th century"], "decade": ["decade(1, 1990)", "1990s"], "year": ["year(1990,)", "1990"], "quarter": ["year(1990,)", "1990"], "month": ["year(1990,)", "1990"], "week": ["year(1990,)", "1990"], "day": ["year(1990,)", "1990"], "hour": ["year(1990,)", "1990"], "minute": ["year(1990,)", "1990"]}, "issues": [0], "change": "", "conf": "low", "confScore": 40, "confWhy": ["date precise to the year", "involved in a consistency ERROR"], "scope": "", "quote": "", "verify": ""}, {"i": 3, "id": "report", "title": "Report filed", "details": "", "exact": "11 Jun 1998", "window": "", "precision": "day", "derived": false, "uncertain": false, "conflict": false, "sourceText": "row 42 · police-log.csv", "sources": [{"doc": "police-log.csv", "loc": "row 42", "date": "11 Jun 1998"}], "tags": [], "entities": [], "docs": ["police-log.csv"], "lanes": {"entities": [], "source": ["police-log.csv"]}, "g": {"millennium": ["millennium(1, 2)", "2nd millennium"], "century": ["century(1, 20)", "20th century"], "decade": ["decade(1, 1990)", "1990s"], "year": ["year(1998,)", "1998"], "quarter": ["quarter(1998, 2)", "Q2 1998"], "month": ["month(1998, 6)", "Jun 1998"], "week": ["week(1998, 24)", "1998-W24"], "day": ["day(1998, 6, 11)", "11 Jun 1998"], "hour": ["day(1998, 6, 11)", "11 Jun 1998"], "minute": ["day(1998, 6, 11)", "11 Jun 1998"]}, "issues": [1], "change": "", "conf": "medium", "confScore": 65, "confWhy": ["date precise to the day", "involved in a consistency ERROR"], "scope": "", "quote": "", "verify": ""}, {"i": 4, "id": "meet", "title": "Smith meets Jones", "details": "", "exact": "12 Jun 1998 14:02", "window": "", "precision": "minute", "derived": false, "uncertain": false, "conflict": true, "sourceText": "3 sources: p3 · witness.txt; row 41 · police-log.csv; §2 · newspaper.html", "sources": [{"doc": "witness.txt", "loc": "p3", "date": "12 Jun 1998 14:02"}, {"doc": "police-log.csv", "loc": "row 41", "date": "12 Jun 1998 14:10"}, {"doc": "newspaper.html", "loc": "§2", "date": "13 Jun 1998"}], "tags": [], "entities": ["Smith"], "docs": ["witness.txt", "police-log.csv", "newspaper.html"], "lanes": {"entities": ["Smith"], "source": ["witness.txt", "police-log.csv", "newspaper.html"]}, "g": {"millennium": ["millennium(1, 2)", "2nd millennium"], "century": ["century(1, 20)", "20th century"], "decade": ["decade(1, 1990)", "1990s"], "year": ["year(1998,)", "1998"], "quarter": ["quarter(1998, 2)", "Q2 1998"], "month": ["month(1998, 6)", "Jun 1998"], "week": ["week(1998, 24)", "1998-W24"], "day": ["day(1998, 6, 12)", "12 Jun 1998"], "hour": ["hour(1998, 6, 12, 14)", "12 Jun 1998 14:00"], "minute": ["minute(1998, 6, 12, 14, 2)", "12 Jun 1998 14:02"]}, "issues": [1, 2, 3], "change": "", "conf": "medium", "confScore": 65, "confWhy": ["date precise to the minute", "backed by 3 sources", "sources disagree on the date", "involved in a consistency ERROR"], "scope": "", "quote": "", "verify": ""}, {"i": 5, "id": "call", "title": "Phone call", "details": "", "exact": "15 Jun 1998", "window": "", "precision": "day", "derived": false, "uncertain": false, "conflict": false, "sourceText": "p4 · witness.txt", "sources": [{"doc": "witness.txt", "loc": "p4", "date": "15 Jun 1998"}], "tags": [], "entities": [], "docs": ["witness.txt"], "lanes": {"entities": [], "source": ["witness.txt"]}, "g": {"millennium": ["millennium(1, 2)", "2nd millennium"], "century": ["century(1, 20)", "20th century"], "decade": ["decade(1, 1990)", "1990s"], "year": ["year(1998,)", "1998"], "quarter": ["quarter(1998, 2)", "Q2 1998"], "month": ["month(1998, 6)", "Jun 1998"], "week": ["week(1998, 25)", "1998-W25"], "day": ["day(1998, 6, 15)", "15 Jun 1998"], "hour": ["day(1998, 6, 15)", "15 Jun 1998"], "minute": ["day(1998, 6, 15)", "15 Jun 1998"]}, "issues": [2], "change": "", "conf": "medium", "confScore": 65, "confWhy": ["date precise to the day", "involved in a consistency ERROR"], "scope": "", "quote": "", "verify": ""}, {"i": 6, "id": "followup", "title": "Follow-up visit", "details": "date derived: +7 days from 'Smith meets Jones'", "exact": "19 Jun 1998", "window": "", "precision": "day", "derived": true, "uncertain": false, "conflict": false, "sourceText": "row 43 · police-log.csv", "sources": [{"doc": "police-log.csv", "loc": "row 43", "date": "19 Jun 1998"}], "tags": [], "entities": [], "docs": ["police-log.csv"], "lanes": {"entities": [], "source": ["police-log.csv"]}, "g": {"millennium": ["millennium(1, 2)", "2nd millennium"], "century": ["century(1, 20)", "20th century"], "decade": ["decade(1, 1990)", "1990s"], "year": ["year(1998,)", "1998"], "quarter": ["quarter(1998, 2)", "Q2 1998"], "month": ["month(1998, 6)", "Jun 1998"], "week": ["week(1998, 25)", "1998-W25"], "day": ["day(1998, 6, 19)", "19 Jun 1998"], "hour": ["day(1998, 6, 19)", "19 Jun 1998"], "minute": ["day(1998, 6, 19)", "19 Jun 1998"]}, "issues": [], "change": "", "conf": "high", "confScore": 75, "confWhy": ["date precise to the day", "derived from a relative statement"], "scope": "", "quote": "", "verify": ""}, {"i": 7, "id": "died", "title": "Smith dies", "details": "", "exact": "10 May 2001", "window": "", "precision": "day", "derived": false, "uncertain": false, "conflict": false, "sourceText": "p2 · witness.txt", "sources": [{"doc": "witness.txt", "loc": "p2", "date": "10 May 2001"}], "tags": [], "entities": ["Smith"], "docs": ["witness.txt"], "lanes": {"entities": ["Smith"], "source": ["witness.txt"]}, "g": {"millennium": ["millennium(1, 3)", "3rd millennium"], "century": ["century(1, 21)", "21st century"], "decade": ["decade(1, 2000)", "2000s"], "year": ["year(2001,)", "2001"], "quarter": ["quarter(2001, 2)", "Q2 2001"], "month": ["month(2001, 5)", "May 2001"], "week": ["week(2001, 19)", "2001-W19"], "day": ["day(2001, 5, 10)", "10 May 2001"], "hour": ["day(2001, 5, 10)", "10 May 2001"], "minute": ["day(2001, 5, 10)", "10 May 2001"]}, "issues": [4], "change": "", "conf": "high", "confScore": 75, "confWhy": ["date precise to the day", "involved in a consistency WARNING"], "scope": "", "quote": "", "verify": ""}, {"i": 8, "id": "letter", "title": "Letter signed by Smith", "details": "", "exact": "2003", "window": "", "precision": "year", "derived": false, "uncertain": false, "conflict": false, "sourceText": "p5 · witness.txt", "sources": [{"doc": "witness.txt", "loc": "p5", "date": "2003"}], "tags": [], "entities": ["Smith"], "docs": ["witness.txt"], "lanes": {"entities": ["Smith"], "source": ["witness.txt"]}, "g": {"millennium": ["millennium(1, 3)", "3rd millennium"], "century": ["century(1, 21)", "21st century"], "decade": ["decade(1, 2000)", "2000s"], "year": ["year(2003,)", "2003"], "quarter": ["year(2003,)", "2003"], "month": ["year(2003,)", "2003"], "week": ["year(2003,)", "2003"], "day": ["year(2003,)", "2003"], "hour": ["year(2003,)", "2003"], "minute": ["year(2003,)", "2003"]}, "issues": [4], "change": "", "conf": "medium", "confScore": 50, "confWhy": ["date precise to the year", "involved in a consistency WARNING"], "scope": "", "quote": "", "verify": ""}], "issues": [{"severity": "ERROR", "kind": "anachronism", "message": "'Smith tweets' (1990) is before Mar 2006, the earliest it could be: Twitter launched March 2006", "cls": "err", "events": [2]}, {"severity": "ERROR", "kind": "order", "message": "'Report filed' (11 Jun 1998) should be after 'Smith meets Jones' (12 Jun 1998 14:02) but is entirely before it", "cls": "err", "events": [3, 4]}, {"severity": "ERROR", "kind": "offset", "message": "'Phone call' (15 Jun 1998) is stated, but +2 days from 'Smith meets Jones' (12 Jun 1998 14:02) gives 14 Jun 1998", "cls": "err", "events": [5, 4]}, {"severity": "WARNING", "kind": "conflict", "message": "'Smith meets Jones' - sources disagree: p3 · witness.txt: 12 Jun 1998 14:02; row 41 · police-log.csv: 12 Jun 1998 14:10; §2 · newspaper.html: 13 Jun 1998", "cls": "warn", "events": [4]}, {"severity": "WARNING", "kind": "lifespan", "message": "'Letter signed by Smith' (2003) involves Smith after 'Smith dies' (10 May 2001) (posthumous or legacy?)", "cls": "warn", "events": [8, 7]}], "gaps": [{"text": "25 years: after 'Smith born' (2 Mar 1950) → before 'Smith marries' (1970s, between 1975 and 1979)", "events": [0, 1]}, {"text": "10 years: after 'Smith marries' (1970s, between 1975 and 1979) → before 'Smith tweets' (1990)", "events": [1, 2]}, {"text": "7.4 years: after 'Smith tweets' (1990) → before 'Report filed' (11 Jun 1998)", "events": [2, 3]}, {"text": "2.9 years: after 'Follow-up visit' (19 Jun 1998) → before 'Smith dies' (10 May 2001)", "events": [6, 7]}, {"text": "1.6 years: after 'Smith dies' (10 May 2001) → before 'Letter signed by Smith' (2003)", "events": [7, 8]}], "undated": [], "told": [{"i": 0, "title": "Smith born", "rank": 1, "move": "", "when": "2 Mar 1950"}, {"i": 7, "title": "Smith dies", "rank": 8, "move": "↪ flash-forward 51 years (skips 6 events told later)", "when": "10 May 2001"}, {"i": 4, "title": "Smith meets Jones", "rank": 5, "move": "↪ flash-forward 48 years (skips 3 events told later)", "when": "12 Jun 1998 14:02"}, {"i": 5, "title": "Phone call", "rank": 6, "move": "↪ flash-forward 48 years (skips 3 events told later)", "when": "15 Jun 1998"}, {"i": 8, "title": "Letter signed by Smith", "rank": 9, "move": "↪ flash-forward 53 years (skips 4 events told later)", "when": "2003"}, {"i": 2, "title": "Smith tweets", "rank": 3, "move": "↪ flash-forward 40 years (skips 1 event told later)", "when": "1990"}, {"i": 1, "title": "Smith marries", "rank": 2, "move": "→ resumes", "when": "1970s, between 1975 and 1979"}, {"i": 3, "title": "Report filed", "rank": 4, "move": "", "when": "11 Jun 1998"}, {"i": 6, "title": "Follow-up visit", "rank": 7, "move": "", "when": "19 Jun 1998"}], "toldSummary": "9 event(s) in telling order; 0 flashback(s), 5 flash-forward(s). Linearity: 62% of steps move forward in story time.", "changes": [], "answer": []}</script>
+<script>
+(function () {
+  var D = JSON.parse(document.getElementById('data').textContent);
+  function $(id) { return document.getElementById(id); }
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return {'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c];
+    });
+  }
+  var S = {level: D.granularity, view: 'timeline', lane: D.laneFields[0], q: '',
+           f: {tags: {}, entities: {}, docs: {}}, flagged: false, open: {}, hl: {}, minConf: 0};
+  try {
+    var saved = localStorage.getItem('chronology-theme');
+    if (saved) document.documentElement.setAttribute('data-theme', saved);
+  } catch (e) {}
+
+  $('title').textContent = D.title;
+  $('stats').textContent = D.stats;
+  if (D.answer.length) {
+    $('answer').hidden = false;
+    $('answer').innerHTML = D.answer.map(function (l) { return '<div>' + esc(l) + '</div>'; }).join('');
+  }
+  var CONF = {low: 0, medium: 1, high: 2};
+
+  D.levels.forEach(function (l) {
+    var o = document.createElement('option');
+    o.value = l[0]; o.textContent = l[1]; o.selected = l[0] === S.level;
+    $('level').appendChild(o);
+  });
+  D.laneFields.forEach(function (f) {
+    var o = document.createElement('option');
+    o.value = f; o.textContent = 'by ' + f; $('lane-field').appendChild(o);
+  });
+
+  var FACETS = [['entities', 'Who'], ['tags', 'Tags'], ['docs', 'Sources']];
+  var fhtml = '';
+  FACETS.forEach(function (fc) {
+    var vals = [];
+    D.events.forEach(function (e) {
+      e[fc[0]].forEach(function (v) { if (vals.indexOf(v) < 0) vals.push(v); });
+    });
+    if (vals.length < (fc[0] === 'docs' ? 2 : 1)) return;
+    fhtml += '<span>' + fc[1] + '</span>' + vals.map(function (v) {
+      return '<button class="chip" aria-pressed="false" data-k="' + fc[0] + '" data-v="' +
+        esc(v) + '">' + esc(v) + '</button>';
+    }).join('');
+  });
+  $('facets').innerHTML = fhtml;
+
+  function active(k) { return Object.keys(S.f[k]); }
+  function match(e) {
+    if (S.flagged && !(e.uncertain || e.conflict || e.issues.length)) return false;
+    if (CONF[e.conf] < S.minConf) return false;
+    for (var n = 0; n < FACETS.length; n++) {
+      var k = FACETS[n][0], sel = active(k);
+      if (sel.length && !e[k].some(function (v) { return S.f[k][v]; })) return false;
+    }
+    if (S.q) {
+      var hay = [e.title, e.details, e.sourceText, e.exact, e.tags.join(' '),
+                 e.entities.join(' ')].join(' ').toLowerCase();
+      if (hay.indexOf(S.q) < 0) return false;
+    }
+    return true;
+  }
+  function groups(list) {
+    var out = [];
+    list.forEach(function (e) {
+      var g = e.g[S.level], last = out[out.length - 1];
+      if (last && last.k === g[0]) last.items.push(e);
+      else out.push({k: g[0], lab: g[1], items: [e]});
+    });
+    return out;
+  }
+  function card(e, lane) {
+    var when = e.exact;
+    if (lane && S.lane === 'source') {
+      // In a source's lane, show the date that source gives.
+      e.sources.forEach(function (s) { if (s.doc === lane && s.date) when = s.date; });
+    }
+    var marks = (e.uncertain ? '<span class="mark" title="Could have happened before the previous event">≈</span>' : '') +
+                (e.conflict ? '<span class="mark" title="Sources disagree on the date">⚠</span>' : '');
+    var sevs = {};
+    e.issues.forEach(function (n) { sevs[D.issues[n].cls] = D.issues[n].severity; });
+    var badges = Object.keys(sevs).map(function (c) {
+      return '<span class="badge b-' + c + '">' + sevs[c] + '</span>';
+    }).join('') + (e.change ? '<span class="badge b-new" title="' + esc(e.change) + '">' +
+      (e.change === 'new' ? 'NEW' : 'CHANGED') + '</span>' : '') +
+      (e.verify === 'not found' ? '<span class="badge b-err">QUOTE NOT FOUND</span>' : '') +
+      (e.conf === 'low' ? '<span class="badge b-low" title="' + esc(e.confWhy.join('; ')) +
+       '">LOW CONFIDENCE</span>' : '') +
+      (e.scope ? '<span class="badge b-info">' + esc(e.scope) + '</span>' : '');
+    var more = '';
+    if (e.details) more += '<p>' + esc(e.details) + '</p>';
+    if (e.window) more += '<p class="tagline">Possible dates: ' + esc(e.window) + '</p>';
+    if (e.quote) more += '<p class="tagline">“' + esc(e.quote) + '”' +
+      (e.verify ? ' — ' + esc(e.verify === 'verified' ? 'verified in source' : e.verify) : '') + '</p>';
+    more += '<p class="tagline">Confidence: ' + esc(e.conf) + ' (' + e.confScore + '/100) — ' +
+      esc(e.confWhy.join('; ')) + '</p>';
+    if (e.sources.length) {
+      more += '<table>' + e.sources.map(function (s) {
+        return '<tr><td>' + esc(s.loc || '—') + '</td><td>' + esc(s.doc) + '</td><td>' +
+          esc(s.date) + '</td></tr>';
+      }).join('') + '</table>';
+    }
+    var labels = e.entities.concat(e.tags);
+    if (labels.length) more += '<p class="tagline">' + esc(labels.join(' · ')) + '</p>';
+    e.issues.forEach(function (n) {
+      var x = D.issues[n];
+      more += '<p><span class="badge b-' + x.cls + '">' + x.severity + '</span> ' +
+        esc(x.message) + '</p>';
+    });
+    return '<article class="ev' + (S.open[e.i] ? ' open' : '') + (S.hl[e.i] ? ' hl' : '') +
+      '" data-i="' + e.i + '"' + (lane ? '' : ' id="ev-' + e.i + '"') +
+      '><div class="when">' + esc(when) +
+      '</div><div class="t">' + marks + esc(e.title) + (e.derived ? ' <span class="tagline">[derived]</span>' : '') +
+      badges + '</div><div class="more">' + more + '</div></article>';
+  }
+  function lanesOf(e) {
+    var v = e.lanes[S.lane] || [];
+    return v.length ? v : ['(other)'];
+  }
+  function render() {
+    var list = D.events.filter(match), gs = groups(list);
+    var max = 1;
+    gs.forEach(function (g) { max = Math.max(max, g.items.length); });
+    $('density').innerHTML = gs.map(function (g, ix) {
+      return '<button data-g="' + ix + '" style="height:' +
+        Math.max(10, Math.round(g.items.length / max * 100)) + '%" title="' +
+        esc(g.lab) + ': ' + g.items.length + '" aria-label="' + esc(g.lab) + ', ' +
+        g.items.length + ' events"></button>';
+    }).join('');
+    if (S.view === 'told') {
+      var keep = {};
+      list.forEach(function (e) { keep[e.i] = true; });
+      var rows = D.told.filter(function (t) {
+        return t.i === null ? !S.flagged && !S.q : keep[t.i];
+      });
+      $('view').innerHTML = '<div class="told"><p class="tagline">' + esc(D.toldSummary) +
+        '</p><table><thead><tr><th>Told</th><th>Story #</th><th>When</th><th>Event</th>' +
+        '<th>Movement</th></tr></thead><tbody>' + rows.map(function (t) {
+          return '<tr><td>' + (D.told.indexOf(t) + 1) + '</td><td>' + (t.rank || '—') +
+            '</td><td>' + esc(t.when) + '</td><td>' + esc(t.title) + '</td><td class="mv">' +
+            esc(t.move) + '</td></tr>';
+        }).join('') + '</tbody></table></div>';
+    } else if (!gs.length) {
+      $('view').innerHTML = '<p class="empty">No events match.</p>';
+    } else if (S.view === 'timeline') {
+      $('view').innerHTML = gs.map(function (g, ix) {
+        return '<section class="period" id="g-' + ix + '"><h3>' + esc(g.lab) + '<small>' +
+          g.items.length + '</small></h3>' + g.items.map(function (e) { return card(e); }).join('') +
+          '</section>';
+      }).join('');
+    } else {
+      var names = [];
+      list.forEach(function (e) {
+        lanesOf(e).forEach(function (v) { if (names.indexOf(v) < 0) names.push(v); });
+      });
+      var oi = names.indexOf('(other)');
+      if (oi >= 0) { names.splice(oi, 1); names.push('(other)'); }
+      $('view').innerHTML = '<div class="lanes"><table><thead><tr><th>When</th>' +
+        names.map(function (n) { return '<th>' + esc(n) + '</th>'; }).join('') +
+        '</tr></thead><tbody>' + gs.map(function (g, ix) {
+          return '<tr><td class="when" id="g-' + ix + '">' + esc(g.lab) + '<small>' +
+            g.items.length + '</small></td>' + names.map(function (n) {
+              return '<td>' + g.items.filter(function (e) {
+                return lanesOf(e).indexOf(n) >= 0;
+              }).map(function (e) { return card(e, n); }).join('') + '</td>';
+            }).join('') + '</tr>';
+        }).join('') + '</tbody></table></div>';
+    }
+    var busy = gs.filter(function (g) { return g.items.length > 1; })
+      .sort(function (a, b) { return b.items.length - a.items.length; }).slice(0, 5);
+    $('busy').innerHTML = busy.length ? busy.map(function (g) {
+      return '<div class="gap" data-g="' + gs.indexOf(g) + '">' + esc(g.lab) + ': ' +
+        g.items.length + ' event' + (g.items.length === 1 ? '' : 's') + '</div>';
+    }).join('') : '<div class="tagline">No period at this zoom has more than one event.</div>';
+  }
+
+  $('report').innerHTML = D.issues.length ? D.issues.map(function (x, n) {
+    return '<div class="issue" data-n="' + n + '"><span class="badge b-' + x.cls + '">' +
+      x.severity + '</span> <b>' + esc(x.kind) + '</b> ' + esc(x.message) + '</div>';
+  }).join('') : '<div class="tagline">No problems found.</div>';
+  $('gaps').innerHTML = D.gaps.length ? D.gaps.map(function (g, n) {
+    return '<div class="gap" data-gap="' + n + '">' + esc(g.text) + '</div>';
+  }).join('') : '<div class="tagline">No certain gaps.</div>';
+  if (D.undated.length) {
+    $('undated').innerHTML = D.undated.map(function (u) {
+      return '<div>' + esc(u.title) + (u.source ? ' <span class="tagline">[' + esc(u.source) + ']</span>' : '') +
+        (u.why ? '<div class="tagline">Date not usable: ' + esc(u.why) + '</div>' : '') + '</div>';
+    }).join('');
+  } else { $('undated-sec').hidden = true; }
+
+  function focusEvents(ids) {
+    S.hl = {}; S.flagged = false; S.q = ''; $('q').value = '';
+    $('flagged').setAttribute('aria-pressed', 'false');
+    FACETS.forEach(function (fc) { S.f[fc[0]] = {}; });
+    Array.prototype.forEach.call(document.querySelectorAll('.chip'), function (c) {
+      c.setAttribute('aria-pressed', 'false');
+    });
+    ids.forEach(function (i) { S.hl[i] = true; S.open[i] = true; });
+    render();
+    var el = ids.length && document.querySelector('.ev[data-i="' + ids[0] + '"]');
+    if (el) el.scrollIntoView({behavior: 'smooth', block: 'center'});
+  }
+
+  $('level').onchange = function () { S.level = this.value; render(); };
+  $('conf').onchange = function () { S.minConf = +this.value; render(); };
+  $('lane-field').onchange = function () { S.lane = this.value; render(); };
+  function setView(v) {
+    S.view = v;
+    $('v-timeline').setAttribute('aria-pressed', String(v === 'timeline'));
+    $('v-lanes').setAttribute('aria-pressed', String(v === 'lanes'));
+    $('v-told').setAttribute('aria-pressed', String(v === 'told'));
+    $('lane-field').hidden = v !== 'lanes';
+    document.body.classList.toggle('lanes-mode', v === 'lanes');
+    render();
+  }
+  $('v-timeline').onclick = function () { setView('timeline'); };
+  $('v-lanes').onclick = function () { setView('lanes'); };
+  $('v-told').onclick = function () { setView('told'); };
+  if (!D.told.length) $('v-told').hidden = true;
+  if (D.changes.length) {
+    $('changes').innerHTML = D.changes.map(function (c, n) {
+      return '<div' + (n ? '' : ' class="tagline"') + '>' + esc(c) + '</div>';
+    }).join('');
+  } else { $('changes-sec').hidden = true; }
+  $('q').oninput = function () { S.q = this.value.trim().toLowerCase(); render(); };
+  $('flagged').onclick = function () {
+    S.flagged = !S.flagged; this.setAttribute('aria-pressed', String(S.flagged)); render();
+  };
+  $('theme').onclick = function () {
+    var root = document.documentElement, cur = root.getAttribute('data-theme');
+    if (!cur) cur = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    var next = cur === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('chronology-theme', next); } catch (e) {}
+  };
+  $('facets').onclick = function (ev) {
+    var c = ev.target.closest('.chip'); if (!c) return;
+    var k = c.getAttribute('data-k'), v = c.getAttribute('data-v');
+    if (S.f[k][v]) delete S.f[k][v]; else S.f[k][v] = true;
+    c.setAttribute('aria-pressed', String(!!S.f[k][v]));
+    render();
+  };
+  $('view').onclick = function (ev) {
+    if (ev.target.closest('.more')) return;
+    var a = ev.target.closest('.ev'); if (!a) return;
+    var i = +a.getAttribute('data-i');
+    S.open[i] = !S.open[i];
+    a.classList.toggle('open', S.open[i]);
+  };
+  function scrollToGroup(ix) {
+    var el = $('g-' + ix);
+    if (el) el.scrollIntoView({behavior: 'smooth', block: 'start'});
+  }
+  $('density').onclick = function (ev) {
+    var b = ev.target.closest('button'); if (b) scrollToGroup(b.getAttribute('data-g'));
+  };
+  $('busy').onclick = function (ev) {
+    var b = ev.target.closest('.gap'); if (b) scrollToGroup(b.getAttribute('data-g'));
+  };
+  $('report').onclick = function (ev) {
+    var x = ev.target.closest('.issue'); if (x) focusEvents(D.issues[+x.getAttribute('data-n')].events);
+  };
+  $('gaps').onclick = function (ev) {
+    var x = ev.target.closest('.gap'); if (x) focusEvents(D.gaps[+x.getAttribute('data-gap')].events);
+  };
+  render();
+})();
+</script>
+</body>
+</html>
+

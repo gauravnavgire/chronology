@@ -1,0 +1,65 @@
+{
+ "id": "11-how-long-question",
+ "prompt": "From these notes: how long was it between the first symptoms and the diagnosis?",
+ "inputs": [
+  "notes.md"
+ ],
+ "should_trigger": true,
+ "events": [
+  {
+   "key": "first-symptoms",
+   "window": [
+    "2024-10-01",
+    "2024-10-10"
+   ],
+   "keywords": [
+    "cough",
+    "noticed"
+   ],
+   "must": true,
+   "vague": true
+  },
+  {
+   "key": "gp",
+   "window": [
+    "2024-10-21",
+    "2024-10-21"
+   ],
+   "keywords": [
+    "gp"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "xray",
+   "window": [
+    "2024-11-04",
+    "2024-11-04"
+   ],
+   "keywords": [
+    "x-ray",
+    "xray"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "diagnosis",
+   "window": [
+    "2024-11-18",
+    "2024-11-18"
+   ],
+   "keywords": [
+    "diagnos"
+   ],
+   "must": true,
+   "vague": false
+  }
+ ],
+ "expect": {
+  "answer_patterns": [
+   "(?i)(6|six|7|seven)\\s*(to|–|-|or)?\\s*(7|seven)?\\s*weeks|(39|4[0-8])\\s*(to|–|-)?\\s*(\\d+\\s*)?days|1\\.?[45]\\s*months|about (a month and a half|six weeks|seven weeks)"
+  ]
+ }
+}

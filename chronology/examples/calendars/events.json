@@ -1,0 +1,120 @@
+{
+  "title": "Dates in other calendars",
+  "source_document": "calendar-notes.md",
+  "reigns": {
+    "Elizabeth II": "1952-02-06"
+  },
+  "fiscal_year": {
+    "start": "10-01",
+    "label": "end"
+  },
+  "events": [
+    {
+      "id": "julian-last",
+      "date": "julian:1582-10-04",
+      "title": "Last day of the Julian calendar in Catholic countries",
+      "source": "§1"
+    },
+    {
+      "id": "greg-first",
+      "date": "1582-10-15",
+      "title": "First day of the Gregorian calendar",
+      "after": "julian-last",
+      "source": "§1"
+    },
+    {
+      "date": "1616-04-22",
+      "title": "Cervantes dies in Madrid (Gregorian calendar)",
+      "source": "§2"
+    },
+    {
+      "date": "julian:1616-04-23",
+      "title": "Shakespeare dies in Stratford (Julian calendar, England)",
+      "details": "Same written date as Cervantes' burial, but 11 days later in real time",
+      "source": "§2"
+    },
+    {
+      "date": "julian:1752-09-02",
+      "title": "Britain's last Julian day",
+      "source": "§3"
+    },
+    {
+      "date": "1752-09-14",
+      "title": "Britain's first Gregorian day",
+      "source": "§3"
+    },
+    {
+      "date": "julian:1917-10-25",
+      "title": "October Revolution in Petrograd",
+      "details": "Russia still used the Julian calendar",
+      "source": "§4"
+    },
+    {
+      "date": "japanese:Showa 20-08-15",
+      "title": "Emperor's surrender broadcast (Gyokuon-hōsō)",
+      "source": "§5"
+    },
+    {
+      "date": "regnal:Elizabeth II:2",
+      "title": "Statute dated in the 2nd regnal year of Elizabeth II",
+      "source": "§6"
+    },
+    {
+      "date": "fy:2024",
+      "title": "US federal fiscal year 2024",
+      "source": "§7"
+    },
+    {
+      "date": "hebrew:5784-adar2-14",
+      "title": "Purim 5784",
+      "source": "§8"
+    },
+    {
+      "date": "hijri:1445-ramadan",
+      "title": "Ramadan 1445 AH",
+      "source": "§9"
+    },
+    {
+      "date": "hebrew:5785-tishrei-01",
+      "title": "Rosh Hashanah 5785",
+      "source": "§8"
+    },
+    {
+      "date": "chinese:2024-01-01",
+      "title": "Chinese New Year 4722",
+      "details": "Lunisolar date: must be converted by hand (10 Feb 2024)",
+      "source": "§10"
+    },
+    {
+      "date": "panchang:Shaka 1596 Jyeshtha shukla 13",
+      "title": "Coronation of Shivaji at Raigad",
+      "details": "Conventionally 6 June 1674, which is the Old Style (Julian) form of the computed 16 June 1674",
+      "source": "§11"
+    },
+    {
+      "date": "panchang:kartikadi VS 1925 Bhadrapada krishna 12",
+      "title": "Birth of M. K. Gandhi at Porbandar",
+      "details": "Gujarati (Kartikadi) year; conventionally 2 October 1869, the day the tithi began",
+      "source": "§11"
+    },
+    {
+      "date": "panchang:VS 2081 Chaitra shukla 9",
+      "title": "Ram Navami 2081",
+      "source": "§12"
+    },
+    {
+      "date": "panchang:VS 2080 adhika Shravana",
+      "title": "Adhika (leap) Shravana month",
+      "source": "§12"
+    },
+    {
+      "date": "panchang:purnimanta VS 2081 Phalguna shukla purnima",
+      "title": "Holi (Phalguna Purnima)",
+      "source": "§12"
+    }
+  ],
+  "panchang": {
+    "location": "delhi",
+    "scheme": "amanta"
+  }
+}

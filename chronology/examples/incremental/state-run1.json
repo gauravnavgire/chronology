@@ -1,0 +1,28 @@
+{
+ "version": 1,
+ "created": "2026-10-21T11:08:11",
+ "files": {
+  "witness.txt": "p3"
+ },
+ "events": {
+  "id:born": {
+   "title": "Smith born",
+   "date": "2 Mar 1950",
+   "sources": 1,
+   "conflict": false
+  },
+  "id:meet": {
+   "title": "Smith meets Jones",
+   "date": "12 Jun 1998 15:00",
+   "sources": 1,
+   "conflict": false
+  },
+  "id:died": {
+   "title": "Smith dies",
+   "date": "10 May 2001",
+   "sources": 1,
+   "conflict": false
+  }
+ },
+ "issues": []
+}

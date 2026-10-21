@@ -1,0 +1,75 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//chronology skill//EN
+CALSCALE:GREGORIAN
+X-WR-CALNAME:Apollo 11 Mission
+BEGIN:VEVENT
+UID:be2d759f23de93f4a53d@chronology
+DTSTAMP:20261021T053810Z
+DTSTART;VALUE=DATE:19610525
+DTEND;VALUE=DATE:19610526
+SUMMARY:Kennedy commits to a Moon landing
+DESCRIPTION:Date: 25 May 1961\nAddress to Congress on urgent national needs
+ \nSources: para 1\nConfidence: high (date precise to the day)
+END:VEVENT
+BEGIN:VEVENT
+UID:18c53ad72061134eb261@chronology
+DTSTAMP:20261021T053810Z
+DTSTART;VALUE=DATE:19690701
+DTEND;VALUE=DATE:19690801
+SUMMARY:c. Worldwide TV audience of ~600 million
+DESCRIPTION:Date: c. Jul 1969\, between Jun 1969 and Aug 1969\nEstimate\; m
+ onth only\nSources: para 8\nConfidence: medium (date precise to the month\
+ ; approximate (c.))
+END:VEVENT
+BEGIN:VEVENT
+UID:e3697487bcbdec53b8e6@chronology
+DTSTAMP:20261021T053810Z
+DTSTART:19690716T133200Z
+SUMMARY:Saturn V launches from LC-39A
+DESCRIPTION:Date: 16 Jul 1969 13:32\nCrew: Armstrong\, Aldrin\, Collins\nSo
+ urces: para 2\nConfidence: high (date precise to the minute)
+END:VEVENT
+BEGIN:VEVENT
+UID:f3adc52731d6897feae4@chronology
+DTSTAMP:20261021T053810Z
+DTSTART:19690720T201740Z
+SUMMARY:Eagle lands in the Sea of Tranquility
+DESCRIPTION:Date: 20 Jul 1969 20:17:40\nArmstrong: "The Eagle has landed."\
+ nSources: para 4\nConfidence: high (date precise to the second)
+END:VEVENT
+BEGIN:VEVENT
+UID:481b970a0b6a37fda4bc@chronology
+DTSTAMP:20261021T053810Z
+DTSTART:19690721T025615Z
+SUMMARY:Armstrong steps onto the lunar surface
+DESCRIPTION:Date: 21 Jul 1969 02:56:15\n"One small step for [a] man..."\nSo
+ urces: para 5\nConfidence: high (date precise to the second)
+END:VEVENT
+BEGIN:VEVENT
+UID:b4ce111abff5461b2f6d@chronology
+DTSTAMP:20261021T053810Z
+DTSTART:19690721T175400Z
+SUMMARY:Eagle ascent stage lifts off the Moon
+DESCRIPTION:Date: 21 Jul 1969 17:54\nSources: para 6\nConfidence: high (dat
+ e precise to the minute)
+END:VEVENT
+BEGIN:VEVENT
+UID:e2d8e2425483b98e973d@chronology
+DTSTAMP:20261021T053810Z
+DTSTART;VALUE=DATE:19690724
+DTEND;VALUE=DATE:19690811
+SUMMARY:Crew in quarantine [derived date]
+DESCRIPTION:Date: 24 Jul 1969 – 10 Aug 1969\nEnd derived: text says '17 d
+ ays in quarantine after splashdown' (24 Jul + 17 d)\nSources: para 7\nConf
+ idence: high (date precise to the day\; derived from a relative statement)
+END:VEVENT
+BEGIN:VEVENT
+UID:1740aa63227c1d22d881@chronology
+DTSTAMP:20261021T053810Z
+DTSTART:19690724T165035Z
+SUMMARY:Columbia splashes down in the Pacific
+DESCRIPTION:Date: 24 Jul 1969 16:50:35\nRecovered by USS Hornet\nSources: p
+ ara 7\nConfidence: high (date precise to the second)
+END:VEVENT
+END:VCALENDAR

@@ -1,0 +1,104 @@
+{
+ "id": "08-old-style-letters",
+ "prompt": "Put these letters, and the events mentioned in them, in chronological order by day. Some use Old Style dates, so make sure they sort correctly.",
+ "inputs": [
+  "letters.md"
+ ],
+ "should_trigger": true,
+ "events": [
+  {
+   "key": "mary-sails",
+   "window": [
+    "1732-01-11",
+    "1732-01-11"
+   ],
+   "keywords": [
+    "sail"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "letter-jan",
+   "window": [
+    "1732-01-12",
+    "1732-01-12"
+   ],
+   "keywords": [
+    "1 january",
+    "london"
+   ],
+   "must": false,
+   "vague": false
+  },
+  {
+   "key": "letter-feb",
+   "window": [
+    "1732-02-22",
+    "1732-02-22"
+   ],
+   "keywords": [
+    "no news",
+    "11 february"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "paris",
+   "window": [
+    "1732-03-03",
+    "1732-03-03"
+   ],
+   "keywords": [
+    "paris",
+    "reached"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "lady-day",
+   "window": [
+    "1732-04-05",
+    "1732-04-05"
+   ],
+   "keywords": [
+    "lady day",
+    "rents"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "mary-arrives",
+   "window": [
+    "1732-06-13",
+    "1732-06-13"
+   ],
+   "keywords": [
+    "arrived"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "letter-boston",
+   "window": [
+    "1732-06-25",
+    "1732-06-25"
+   ],
+   "keywords": [
+    "boston",
+    "14 june"
+   ],
+   "must": false,
+   "vague": false
+  }
+ ],
+ "expect": {
+  "behaviours": [
+   "julian"
+  ]
+ }
+}

@@ -1,0 +1,9 @@
+order,when,exact,earliest_possible,latest_possible,precision,approximate,order_uncertain,conflict,source_count,confidence,confidence_score,confidence_reasons,title,details,source,tags
+1,1961-W21,25 May 1961,25 May 1961,25 May 1961,day,False,False,False,1,high,85,date precise to the day,Kennedy commits to a Moon landing,Address to Congress on urgent national needs,para 1,
+2,c. Jul 1969,"c. Jul 1969, between Jun 1969 and Aug 1969",Jun 1969,Aug 1969,month,True,False,False,1,medium,55,date precise to the month; approximate (c.),Worldwide TV audience of ~600 million,Estimate; month only,para 8,
+3,1969-W29,16 Jul 1969 13:32,16 Jul 1969 13:32,16 Jul 1969 13:32,minute,False,True,False,1,high,90,date precise to the minute,Saturn V launches from LC-39A,"Crew: Armstrong, Aldrin, Collins",para 2,
+4,1969-W29,20 Jul 1969 20:17:40,20 Jul 1969 20:17:40,20 Jul 1969 20:17:40,second,False,False,False,1,high,90,date precise to the second,Eagle lands in the Sea of Tranquility,"Armstrong: ""The Eagle has landed.""",para 4,
+5,1969-W30,21 Jul 1969 02:56:15,21 Jul 1969 02:56:15,21 Jul 1969 02:56:15,second,False,False,False,1,high,90,date precise to the second,Armstrong steps onto the lunar surface,"""One small step for [a] man...""",para 5,
+6,1969-W30,21 Jul 1969 17:54,21 Jul 1969 17:54,21 Jul 1969 17:54,minute,False,False,False,1,high,90,date precise to the minute,Eagle ascent stage lifts off the Moon,,para 6,
+7,1969-W30 – 1969-W32,24 Jul 1969 – 10 Aug 1969,24 Jul 1969,24 Jul 1969,day,False,False,False,1,high,75,date precise to the day; derived from a relative statement,Crew in quarantine,End derived: text says '17 days in quarantine after splashdown' (24 Jul + 17 d),para 7,
+8,1969-W30,24 Jul 1969 16:50:35,24 Jul 1969 16:50:35,24 Jul 1969 16:50:35,second,False,True,False,1,high,90,date precise to the second,Columbia splashes down in the Pacific,Recovered by USS Hornet,para 7,

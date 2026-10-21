@@ -1,0 +1,33 @@
+name: release
+
+# Push a tag like v1.0.0 to publish a GitHub release with chronology.zip attached
+# (the file people upload to Claude.ai under Customize -> Skills).
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Test before releasing
+        working-directory: chronology
+        env:
+          PYTHONUTF8: "1"
+        run: python -m unittest discover -s tests
+      - name: Build chronology.zip (skill folder at the ZIP root)
+        run: |
+          find chronology -name "__pycache__" -type d -prune -exec rm -rf {} +
+          python -c "import shutil; shutil.make_archive('chronology', 'zip', '.', 'chronology')"
+      - name: Create the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" chronology.zip --title "$GITHUB_REF_NAME" --notes-file CHANGELOG.md

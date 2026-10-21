@@ -1,0 +1,78 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//chronology skill//EN
+CALSCALE:GREGORIAN
+X-WR-CALNAME:Website relaunch
+BEGIN:VEVENT
+UID:a847dcad2fff5dab6e5b@chronology
+DTSTAMP:20261021T053811Z
+DTSTART;VALUE=DATE:20250106
+DTEND;VALUE=DATE:20250107
+SUMMARY:Project kickoff
+DESCRIPTION:Date: 6 Jan 2025\nSources: report 1\nConfidence: high (date pre
+ cise to the day)
+CATEGORIES:Management
+END:VEVENT
+BEGIN:VEVENT
+UID:6390e32d631952e6e54d@chronology
+DTSTAMP:20261021T053811Z
+DTSTART;VALUE=DATE:20250214
+DTEND;VALUE=DATE:20250215
+SUMMARY:Designs signed off
+DESCRIPTION:Date: 14 Feb 2025\nSources: report 3\nConfidence: high (date pr
+ ecise to the day\; involved in a consistency WARNING)
+CATEGORIES:Design
+END:VEVENT
+BEGIN:VEVENT
+UID:fd2af389bbe2164e66d5@chronology
+DTSTAMP:20261021T053811Z
+DTSTART;VALUE=DATE:20250301
+DTEND;VALUE=DATE:20250401
+SUMMARY:Content migration finished
+DESCRIPTION:Date: Mar 2025\nReport only says 'during March'\nSources: repor
+ t 6\nConfidence: medium (date precise to the month\; involved in a consist
+ ency WARNING)
+CATEGORIES:Content
+END:VEVENT
+BEGIN:VEVENT
+UID:5bcd9e2f463ed5a23361@chronology
+DTSTAMP:20261021T053811Z
+DTSTART;VALUE=DATE:20250321
+DTEND;VALUE=DATE:20250322
+SUMMARY:New API live in staging
+DESCRIPTION:Date: 21 Mar 2025\nSources: report 5\nConfidence: high (date pr
+ ecise to the day)
+CATEGORIES:Backend
+END:VEVENT
+BEGIN:VEVENT
+UID:36fffd533048bb4cba20@chronology
+DTSTAMP:20261021T053811Z
+DTSTART;VALUE=DATE:20250404
+DTEND;VALUE=DATE:20250405
+SUMMARY:Front end feature-complete
+DESCRIPTION:Date: 4 Apr 2025\nSources: report 7\nConfidence: high (date pre
+ cise to the day\; involved in a consistency WARNING)
+CATEGORIES:Frontend
+END:VEVENT
+BEGIN:VEVENT
+UID:fe11843ddb91859c75a9@chronology
+DTSTAMP:20261021T053811Z
+DTSTART;VALUE=DATE:20250418
+DTEND;VALUE=DATE:20250419
+SUMMARY:QA sign-off
+DESCRIPTION:Date: 18 Apr 2025\nPM 'believes' QA signed off that Friday\nSou
+ rces: email 12\nConfidence: medium (date precise to the day\; the source h
+ edges (e.g. 'reportedly'))
+CATEGORIES:QA
+END:VEVENT
+BEGIN:VEVENT
+UID:d9d6a6d1c696495be702@chronology
+DTSTAMP:20261021T053811Z
+DTSTART;VALUE=DATE:20250502
+DTEND;VALUE=DATE:20250503
+SUMMARY:Public launch
+DESCRIPTION:Date: 2 May 2025\nSources: report 9\nConfidence: high (date pre
+ cise to the day\; involved in a consistency WARNING)
+CATEGORIES:Management
+END:VEVENT
+END:VCALENDAR

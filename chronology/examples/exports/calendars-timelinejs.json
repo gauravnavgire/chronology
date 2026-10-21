@@ -1,0 +1,185 @@
+{
+ "title": {
+  "text": {
+   "headline": "Dates in other calendars"
+  }
+ },
+ "events": [
+  {
+   "start_date": {
+    "year": 1582,
+    "month": 10,
+    "day": 14
+   },
+   "text": {
+    "headline": "Last day of the Julian calendar in Catholic countries",
+    "text": "Sources: §1"
+   },
+   "display_date": "4 Oct 1582 (Julian) (= 14 Oct 1582)",
+   "unique_id": "e0",
+   "group": "calendar-notes.md"
+  },
+  {
+   "start_date": {
+    "year": 1582,
+    "month": 10,
+    "day": 15
+   },
+   "text": {
+    "headline": "First day of the Gregorian calendar",
+    "text": "Sources: §1"
+   },
+   "display_date": "15 Oct 1582",
+   "unique_id": "e1",
+   "group": "calendar-notes.md"
+  },
+  {
+   "start_date": {
+    "year": 1616,
+    "month": 4,
+    "day": 22
+   },
+   "text": {
+    "headline": "Cervantes dies in Madrid (Gregorian calendar)",
+    "text": "Sources: §2"
+   },
+   "display_date": "22 Apr 1616",
+   "unique_id": "e2",
+   "group": "calendar-notes.md"
+  },
+  {
+   "start_date": {
+    "year": 1616,
+    "month": 5,
+    "day": 3
+   },
+   "text": {
+    "headline": "Shakespeare dies in Stratford (Julian calendar, England)",
+    "text": "Same written date as Cervantes&#x27; burial, but 11 days later in real time<br>Sources: §2"
+   },
+   "display_date": "23 Apr 1616 (Julian) (= 3 May 1616)",
+   "unique_id": "e3",
+   "group": "calendar-notes.md"
+  },
+  {
+   "start_date": {
+    "year": 1752,
+    "month": 9,
+    "day": 13
+   },
+   "text": {
+    "headline": "Britain&#x27;s last Julian day",
+    "text": "Sources: §3"
+   },
+   "display_date": "2 Sep 1752 (Julian) (= 13 Sep 1752)",
+   "unique_id": "e4",
+   "group": "calendar-notes.md"
+  },
+  {
+   "start_date": {
+    "year": 1752,
+    "month": 9,
+    "day": 14
+   },
+   "text": {
+    "headline": "Britain&#x27;s first Gregorian day",
+    "text": "Sources: §3"
+   },
+   "display_date": "14 Sep 1752",
+   "unique_id": "e5",
+   "group": "calendar-notes.md"
+  },
+  {
+   "start_date": {
+    "year": 1917,
+    "month": 11,
+    "day": 7
+   },
+   "text": {
+    "headline": "October Revolution in Petrograd",
+    "text": "Russia still used the Julian calendar<br>Sources: §4"
+   },
+   "display_date": "25 Oct 1917 (Julian) (= 7 Nov 1917)",
+   "unique_id": "e6",
+   "group": "calendar-notes.md"
+  },
+  {
+   "start_date": {
+    "year": 1945,
+    "month": 8,
+    "day": 15
+   },
+   "text": {
+    "headline": "Emperor&#x27;s surrender broadcast (Gyokuon-hōsō)",
+    "text": "Sources: §5"
+   },
+   "display_date": "Shōwa 20-08-15 (= 15 Aug 1945)",
+   "unique_id": "e7",
+   "group": "calendar-notes.md"
+  },
+  {
+   "start_date": {
+    "year": 1953
+   },
+   "text": {
+    "headline": "Statute dated in the 2nd regnal year of Elizabeth II",
+    "text": "Sources: §6"
+   },
+   "display_date": "year 2 of Elizabeth II (= 6 Feb 1953 – 5 Feb 1954)",
+   "unique_id": "e8",
+   "group": "calendar-notes.md"
+  },
+  {
+   "start_date": {
+    "year": 2023
+   },
+   "text": {
+    "headline": "US federal fiscal year 2024",
+    "text": "Sources: §7"
+   },
+   "display_date": "FY2024 (= 1 Oct 2023 – 30 Sep 2024)",
+   "unique_id": "e9",
+   "group": "calendar-notes.md"
+  },
+  {
+   "start_date": {
+    "year": 2024
+   },
+   "text": {
+    "headline": "Ramadan 1445 AH",
+    "text": "Sources: §9"
+   },
+   "display_date": "Ramadan 1445 AH (= 11 Mar 2024 – 9 Apr 2024)",
+   "unique_id": "e11",
+   "group": "calendar-notes.md"
+  },
+  {
+   "start_date": {
+    "year": 2024,
+    "month": 3,
+    "day": 24
+   },
+   "text": {
+    "headline": "Purim 5784",
+    "text": "Sources: §8"
+   },
+   "display_date": "14 Adar II 5784 AM (= 24 Mar 2024)",
+   "unique_id": "e10",
+   "group": "calendar-notes.md"
+  },
+  {
+   "start_date": {
+    "year": 2024,
+    "month": 10,
+    "day": 3
+   },
+   "text": {
+    "headline": "Rosh Hashanah 5785",
+    "text": "Sources: §8"
+   },
+   "display_date": "1 Tishrei 5785 AM (= 3 Oct 2024)",
+   "unique_id": "e12",
+   "group": "calendar-notes.md"
+  }
+ ]
+}

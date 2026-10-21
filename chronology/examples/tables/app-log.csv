@@ -1,0 +1,57 @@
+ts,level,service,message
+1748959211000,INFO,payments,deploy v2.14 started
+1748959600000,ERROR,checkout,upstream timeout calling payments
+1748959603000,ERROR,checkout,upstream timeout calling payments
+1748959606000,ERROR,checkout,upstream timeout calling payments
+1748959609000,ERROR,checkout,upstream timeout calling payments
+1748959612000,ERROR,checkout,upstream timeout calling payments
+1748959615000,ERROR,checkout,upstream timeout calling payments
+1748959618000,ERROR,checkout,upstream timeout calling payments
+1748959621000,ERROR,checkout,upstream timeout calling payments
+1748959624000,ERROR,checkout,upstream timeout calling payments
+1748959627000,ERROR,checkout,upstream timeout calling payments
+1748959630000,ERROR,checkout,upstream timeout calling payments
+1748959633000,ERROR,checkout,upstream timeout calling payments
+1748959636000,ERROR,checkout,upstream timeout calling payments
+1748959639000,ERROR,checkout,upstream timeout calling payments
+1748959642000,ERROR,checkout,upstream timeout calling payments
+1748959645000,ERROR,checkout,upstream timeout calling payments
+1748959648000,ERROR,checkout,upstream timeout calling payments
+1748959651000,ERROR,checkout,upstream timeout calling payments
+1748959654000,ERROR,checkout,upstream timeout calling payments
+1748959657000,ERROR,checkout,upstream timeout calling payments
+1748959660000,ERROR,checkout,upstream timeout calling payments
+1748959663000,ERROR,checkout,upstream timeout calling payments
+1748959666000,ERROR,checkout,upstream timeout calling payments
+1748959669000,ERROR,checkout,upstream timeout calling payments
+1748959672000,ERROR,checkout,upstream timeout calling payments
+1748959675000,ERROR,checkout,upstream timeout calling payments
+1748959678000,ERROR,checkout,upstream timeout calling payments
+1748959681000,ERROR,checkout,upstream timeout calling payments
+1748959684000,ERROR,checkout,upstream timeout calling payments
+1748959687000,ERROR,checkout,upstream timeout calling payments
+1748959690000,ERROR,checkout,upstream timeout calling payments
+1748959693000,ERROR,checkout,upstream timeout calling payments
+1748959696000,ERROR,checkout,upstream timeout calling payments
+1748959699000,ERROR,checkout,upstream timeout calling payments
+1748959702000,ERROR,checkout,upstream timeout calling payments
+1748959705000,ERROR,checkout,upstream timeout calling payments
+1748959708000,ERROR,checkout,upstream timeout calling payments
+1748959711000,ERROR,checkout,upstream timeout calling payments
+1748959714000,ERROR,checkout,upstream timeout calling payments
+1748959717000,ERROR,checkout,upstream timeout calling payments
+1748959742000,WARN,oncall,page sent to on-call
+1748960500000,INFO,payments,health check failed
+1748960520000,INFO,payments,health check failed
+1748960540000,INFO,payments,health check failed
+1748960560000,INFO,payments,health check failed
+1748960580000,INFO,payments,health check failed
+1748960600000,INFO,payments,health check failed
+1748960620000,INFO,payments,health check failed
+1748960640000,INFO,payments,health check failed
+1748960660000,INFO,payments,health check failed
+1748960680000,INFO,payments,health check failed
+1748960700000,INFO,payments,health check failed
+1748960720000,INFO,payments,health check failed
+1748960497000,INFO,payments,rollback to v2.13 started
+1748960825000,INFO,checkout,error rate back to baseline

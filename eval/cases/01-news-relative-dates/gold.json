@@ -1,0 +1,167 @@
+{
+ "id": "01-news-relative-dates",
+ "prompt": "Can you put the events in this article in chronological order? Day level is fine, as a table.",
+ "inputs": [
+  "article.md"
+ ],
+ "should_trigger": true,
+ "events": [
+  {
+   "key": "built",
+   "window": [
+    "1887",
+    "1887"
+   ],
+   "keywords": [
+    "built"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "closed",
+   "window": [
+    "1994",
+    "1994"
+   ],
+   "keywords": [
+    "closed"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "bought",
+   "window": [
+    "2024-09-01",
+    "2024-11-30"
+   ],
+   "keywords": [
+    "bought",
+    "kestrel"
+   ],
+   "must": true,
+   "vague": true
+  },
+  {
+   "key": "plans",
+   "window": [
+    "2025-01",
+    "2025-01"
+   ],
+   "keywords": [
+    "plans",
+    "flats"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "seen",
+   "window": [
+    "2025-02-25",
+    "2025-03-08"
+   ],
+   "keywords": [
+    "people",
+    "site",
+    "seen"
+   ],
+   "must": false,
+   "vague": true
+  },
+  {
+   "key": "fire-reported",
+   "window": [
+    "2025-03-11",
+    "2025-03-11"
+   ],
+   "keywords": [
+    "fire",
+    "reported"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "under-control",
+   "window": [
+    "2025-03-12",
+    "2025-03-12"
+   ],
+   "keywords": [
+    "control"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "arrest",
+   "window": [
+    "2025-03-12",
+    "2025-03-12"
+   ],
+   "keywords": [
+    "arrest"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "suspicious",
+   "window": [
+    "2025-03-13",
+    "2025-03-13"
+   ],
+   "keywords": [
+    "suspicious"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "damping",
+   "window": [
+    "2025-03-14",
+    "2025-03-14"
+   ],
+   "keywords": [
+    "damping",
+    "crews"
+   ],
+   "must": false,
+   "vague": false
+  },
+  {
+   "key": "council",
+   "window": [
+    "2025-03-28",
+    "2025-03-28"
+   ],
+   "keywords": [
+    "council"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "planning-decision",
+   "window": [
+    "2025-04-02",
+    "2025-04-02"
+   ],
+   "keywords": [
+    "planning",
+    "decision"
+   ],
+   "must": true,
+   "vague": false
+  }
+ ],
+ "expect": {
+  "layout": "table",
+  "behaviours": [
+   "derived_dates"
+  ]
+ }
+}

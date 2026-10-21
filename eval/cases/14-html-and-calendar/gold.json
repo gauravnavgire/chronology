@@ -1,0 +1,89 @@
+{
+ "id": "14-html-and-calendar",
+ "prompt": "Here are my conference notes. Give me something I can click through in a browser, and a calendar file I can import.",
+ "inputs": [
+  "conference.md"
+ ],
+ "should_trigger": true,
+ "events": [
+  {
+   "key": "keynote",
+   "window": [
+    "2025-10-07T08:00Z",
+    "2025-10-07T08:00Z"
+   ],
+   "keywords": [
+    "keynote"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "observability",
+   "window": [
+    "2025-10-07T10:30Z",
+    "2025-10-07T10:30Z"
+   ],
+   "keywords": [
+    "observability"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "workshop",
+   "window": [
+    "2025-10-07T14:00Z",
+    "2025-10-07T16:00Z"
+   ],
+   "keywords": [
+    "rust",
+    "workshop"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "panel",
+   "window": [
+    "2025-10-08T09:00Z",
+    "2025-10-08T09:00Z"
+   ],
+   "keywords": [
+    "panel"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "dinner",
+   "window": [
+    "2025-10-08T18:30Z",
+    "2025-10-08T18:30Z"
+   ],
+   "keywords": [
+    "dinner"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "closing",
+   "window": [
+    "2025-10-09T11:00Z",
+    "2025-10-09T11:00Z"
+   ],
+   "keywords": [
+    "closing"
+   ],
+   "must": true,
+   "vague": false
+  }
+ ],
+ "expect": {
+  "artifacts": [
+   "\\.html$",
+   "\\.ics$"
+  ]
+ }
+}

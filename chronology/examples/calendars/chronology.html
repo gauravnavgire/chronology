@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dates in other calendars</title>
+<style>
+:root{--bg:#fbfaf7;--panel:#fff;--ink:#1d1d1f;--muted:#6b6b70;--line:#e3e1db;--accent:#2f6fde;--accent-soft:#e8effc;--err:#b3261e;--err-soft:#fdecea;--warn:#8a5000;--warn-soft:#fff2db;--info:#4a5568;--info-soft:#eef0f3;--bar:#9db7ea}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141416;--panel:#1d1d20;--ink:#ececee;--muted:#9a9aa2;--line:#2e2e33;--accent:#7aa5f5;--accent-soft:#1f2a40;--err:#ff8a80;--err-soft:#3a1d1d;--warn:#ffc266;--warn-soft:#3a2c14;--info:#b8c0cc;--info-soft:#25282e;--bar:#46679f}}
+:root[data-theme="dark"]{--bg:#141416;--panel:#1d1d20;--ink:#ececee;--muted:#9a9aa2;--line:#2e2e33;--accent:#7aa5f5;--accent-soft:#1f2a40;--err:#ff8a80;--err-soft:#3a1d1d;--warn:#ffc266;--warn-soft:#3a2c14;--info:#b8c0cc;--info-soft:#25282e;--bar:#46679f}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{padding:20px 16px 8px;max-width:1140px;margin:0 auto}
+h1{font-size:1.5rem;margin:0 0 4px}
+.stats{color:var(--muted);font-size:.9rem}
+.controls{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line);padding:10px 16px}
+.row{max-width:1140px;margin:0 auto;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+select,input[type=search],button{font:inherit;color:inherit;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:5px 10px}
+input[type=search]{flex:1 1 200px;min-width:0}
+button{cursor:pointer}
+button[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+.facets{max-width:1140px;margin:8px auto 0;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.facets span{color:var(--muted);font-size:.8rem;margin-left:4px}
+.chip{font-size:.8rem;padding:1px 9px;border-radius:999px}
+main{max-width:1140px;margin:0 auto;padding:12px 16px 60px;display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:24px}
+@media (max-width:860px){main{grid-template-columns:minmax(0,1fr)}}
+.density{display:flex;align-items:flex-end;gap:2px;height:56px;margin:4px 0 18px;overflow-x:auto;border-bottom:1px solid var(--line)}
+.density button{flex:1 0 6px;min-width:6px;max-width:28px;padding:0;border:0;border-radius:3px 3px 0 0;background:var(--bar)}
+.density button:hover{background:var(--accent)}
+.period{margin:0 0 18px 6px;padding-left:18px;border-left:2px solid var(--line)}
+.period h3{margin:0 0 8px;font-size:1rem;position:relative}
+.period h3::before{content:"";position:absolute;left:-25px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--accent)}
+.period h3 small,.lanes small{color:var(--muted);font-weight:400;margin-left:6px}
+.ev{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin:0 0 8px;cursor:pointer}
+.ev.hl{outline:2px solid var(--accent);outline-offset:1px}
+.ev .when{font-size:.8rem;color:var(--muted)}
+.ev .t{font-weight:600}
+.ev .more{display:none;margin-top:8px;font-size:.9rem;cursor:auto}
+.ev.open .more{display:block}
+.ev .more p{margin:0 0 6px}
+.mark{font-weight:700;margin-right:3px}
+.badge{display:inline-block;font-size:.7rem;padding:0 6px;border-radius:6px;margin-left:6px;font-weight:600;vertical-align:1px}
+.b-err{background:var(--err-soft);color:var(--err)}.b-warn{background:var(--warn-soft);color:var(--warn)}.b-info{background:var(--info-soft);color:var(--info)}
+.more table{border-collapse:collapse;width:100%;font-size:.85rem}
+.more td{border-top:1px solid var(--line);padding:3px 8px 3px 0;vertical-align:top;overflow-wrap:anywhere}
+.more table{table-layout:fixed}
+.tagline{color:var(--muted);font-size:.8rem}
+aside section{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-bottom:14px;font-size:.88rem}
+aside h2{font-size:.95rem;margin:0 0 6px}
+.issue,.gap{padding:6px 0;border-top:1px solid var(--line);cursor:pointer}
+.issue:hover,.gap:hover{color:var(--accent)}
+.lanes{overflow-x:auto}
+.lanes table{border-collapse:separate;border-spacing:6px 0;min-width:100%}
+.lanes th{text-align:left;font-size:.85rem;color:var(--muted);padding:4px 0;border-bottom:1px solid var(--line)}
+.lanes td{vertical-align:top;min-width:200px;max-width:300px;padding-top:8px}
+body.lanes-mode main{grid-template-columns:minmax(0,1fr)}
+body.lanes-mode aside{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+body.lanes-mode aside section{margin:0}
+.lanes td.when{min-width:110px;font-weight:600;font-size:.9rem}
+.lanes .ev{margin:0 0 6px}
+.empty{color:var(--muted);padding:20px 0}
+.b-new{background:var(--accent-soft);color:var(--accent)}
+.b-low{background:var(--warn-soft);color:var(--warn)}
+.answer{margin-top:10px;padding:10px 12px;background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:8px;font-size:.92rem}
+.answer div+div{margin-top:4px}
+.told td{padding:6px 8px 6px 0;border-top:1px solid var(--line);vertical-align:top;font-size:.9rem}
+.told th{text-align:left;font-size:.8rem;color:var(--muted);padding:4px 8px 4px 0}
+.told table{border-collapse:collapse;width:100%}
+.told .mv{color:var(--accent)}
+</style>
+</head>
+<body>
+<header><h1 id="title"></h1><div class="stats" id="stats"></div><div class="answer" id="answer" hidden></div></header>
+<div class="controls">
+  <div class="row">
+    <label>Zoom <select id="level" aria-label="Granularity"></select></label>
+    <button id="v-timeline" aria-pressed="true">Timeline</button>
+    <button id="v-lanes" aria-pressed="false">Lanes</button>
+    <button id="v-told" aria-pressed="false" title="Order in which the source tells events">As told</button>
+    <select id="lane-field" aria-label="Lanes by" hidden></select>
+    <input type="search" id="q" placeholder="Search titles, details, sources…" aria-label="Search">
+    <button id="flagged" aria-pressed="false" title="Only events marked ≈, ⚠ or with issues">Flagged only</button>
+    <select id="conf" aria-label="Minimum confidence"><option value="0">Any confidence</option><option value="1">Medium or high</option><option value="2">High only</option></select>
+    <button id="theme" title="Toggle light/dark">◐</button>
+  </div>
+  <div class="facets" id="facets"></div>
+</div>
+<main>
+  <div>
+    <div class="density" id="density" aria-label="Events per period"></div>
+    <div id="view"></div>
+  </div>
+  <aside>
+    <section id="changes-sec"><h2>Changes since last run</h2><div id="changes"></div></section>
+    <section><h2>Consistency report</h2><div id="report"></div></section>
+    <section><h2>Gaps</h2><div id="gaps"></div></section>
+    <section><h2>Busiest periods</h2><div id="busy"></div></section>
+    <section id="undated-sec"><h2>Undated</h2><div id="undated"></div></section>
+    <section><h2>Legend</h2>
+      <div><span class="mark">≈</span>could have happened before the previous event</div>
+      <div><span class="mark">⚠</span>sources disagree on the date</div>
+      <div><span class="mark">[derived]</span>date computed from a relative statement</div>
+    </section>
+  </aside>
+</main>
+<script type="application/json" id="data">{"title": "Dates in other calendars", "stats": "18 events · 4 Oct 1582 (Julian) (= 14 Oct 1582) → VS 2081 Phalguna Shukla (Purnima) [at sunrise on 14 Mar 2025; tithi ran 13 Mar 2025 10:37 to 14 Mar 2025 12:25, UTC+5:30] [purnimanta] (= 13 Mar 2025 – 14 Mar 2025) · 0 errors, 0 warnings", "granularity": "year", "levels": [["millennium", "Millennium"], ["century", "Century"], ["decade", "Decade"], ["year", "Year"], ["quarter", "Quarter"], ["month", "Month"], ["week", "Week"], ["day", "Day"]], "laneFields": ["source"], "events": [{"i": 0, "id": "julian-last", "title": "Last day of the Julian calendar in Catholic countries", "details": "", "exact": "4 Oct 1582 (Julian) (= 14 Oct 1582)", "window": "between 14 Oct 1582 and 14 Oct 1582", "precision": "day", "derived": false, "uncertain": false, "conflict": false, "sourceText": "§1", "sources": [{"doc": "calendar-notes.md", "loc": "§1", "date": "4 Oct 1582 (Julian) (= 14 Oct 1582)"}], "tags": [], "entities": [], "docs": ["calendar-notes.md"], "lanes": {"source": ["calendar-notes.md"]}, "g": {"millennium": ["millennium(1, 2)", "2nd millennium"], "century": ["century(1, 16)", "16th century"], "decade": ["decade(1, 1580)", "1580s"], "year": ["year(1582,)", "1582"], "quarter": ["quarter(1582, 4)", "Q4 1582"], "month": ["month(1582, 10)", "Oct 1582"], "week": ["week(1582, 41)", "1582-W41"], "day": ["day(1582, 10, 14)", "14 Oct 1582"]}, "issues": [], "change": "", "conf": "high", "confScore": 85, "confWhy": ["date precise to the day"], "scope": "", "quote": "", "verify": ""}, {"i": 1, "id": "greg-first", "title": "First day of the Gregorian calendar", "details": "", "exact": "15 Oct 1582", "window": "", "precision": "day", "derived": false, "uncertain": false, "conflict": false, "sourceText": "§1", "sources": [{"doc": "calendar-notes.md", "loc": "§1", "date": "15 Oct 1582"}], "tags": [], "entities": [], "docs": ["calendar-notes.md"], "lanes": {"source": ["calendar-notes.md"]}, "g": {"millennium": ["millennium(1, 2)", "2nd millennium"], "century": ["century(1, 16)", "16th century"], "decade": ["decade(1, 1580)", "1580s"], "year": ["year(1582,)", "1582"], "quarter": ["quarter(1582, 4)", "Q4 1582"], "month": ["month(1582, 10)", "Oct 1582"], "week": ["week(1582, 41)", "1582-W41"], "day": ["day(1582, 10, 15)", "15 Oct 1582"]}, "issues": [], "change": "", "conf": "high", "confScore": 85, "confWhy": ["date precise to the day"], "scope": "", "quote": "", "verify": ""}, {"i": 2, "id": null, "title": "Cervantes dies in Madrid (Gregorian calendar)", "details": "", "exact": "22 Apr 1616", "window": "", "precision": "day", "derived": false, "uncertain": false, "conflict": false, "sourceText": "§2", "sources": [{"doc": "calendar-notes.md", "loc": "§2", "date": "22 Apr 1616"}], "tags": [], "entities": [], "docs": ["calendar-notes.md"], "lanes": {"source": ["calendar-notes.md"]}, "g": {"millennium": ["millennium(1, 2)", "2nd millennium"], "century": ["century(1, 17)", "17th century"], "decade": ["decade(1, 1610)", "1610s"], "year": ["year(1616,)", "1616"], "quarter": ["quarter(1616, 2)", "Q2 1616"], "month": ["month(1616, 4)", "Apr 1616"], "week": ["week(1616, 16)", "1616-W16"], "day": ["day(1616, 4, 22)", "22 Apr 1616"]}, "issues": [], "change": "", "conf": "high", "confScore": 85, "confWhy": ["date precise to the day"], "scope": "", "quote": "", "verify": ""}, {"i": 3, "id": null, "title": "Shakespeare dies in Stratford (Julian calendar, England)", "details": "Same written date as Cervantes' burial, but 11 days later in real time", "exact": "23 Apr 1616 (Julian) (= 3 May 1616)", "window": "between 3 May 1616 and 3 May 1616", "precision": "day", "derived": false, "uncertain": false, "conflict": false, "sourceText": "§2", "sources": [{"doc": "calendar-notes.md", "loc": "§2", "date": "23 Apr 1616 (Julian) (= 3 May 1616)"}], "tags": [], "entities": [], "docs": ["calendar-notes.md"], "lanes": {"source": ["calendar-notes.md"]}, "g": {"millennium": ["millennium(1, 2)", "2nd millennium"], "century": ["century(1, 17)", "17th century"], "decade": ["decade(1, 1610)", "1610s"], "year": ["year(1616,)", "1616"], "quarter": ["quarter(1616, 2)", "Q2 1616"], "month": ["month(1616, 5)", "May 1616"], "week": ["week(1616, 18)", "1616-W18"], "day": ["day(1616, 5, 3)", "3 May 1616"]}, "issues": [], "change": "", "conf": "high", "confScore": 85, "confWhy": ["date precise to the day"], "scope": "", "quote": "", "verify": ""}, {"i": 4, "id": null, "title": "Coronation of Shivaji at Raigad", "details": "Conventionally 6 June 1674, which is the Old Style (Julian) form of the computed 16 June 1674", "exact": "Shaka 1596 Jyeshtha Shukla 13 (Trayodashi) [at sunrise on 16 Jun 1674; tithi ran 15 Jun 1674 14:41 to 16 Jun 1674 13:39, UTC+5:30] (= 15 Jun 1674 – 16 Jun 1674)", "window": "between 14 Jun 1674 and 17 Jun 1674", "precision": "month", "derived": false, "uncertain": false, "conflict": false, "sourceText": "§11", "sources": [{"doc": "calendar-notes.md", "loc": "§11", "date": "Shaka 1596 Jyeshtha Shukla 13 (Trayodashi) [at sunrise on 16 Jun 1674; tithi ran 15 Jun 1674 14:41 to 16 Jun 1674 13:39, UTC+5:30] (= 15 Jun 1674 – 16 Jun 1674)"}], "tags": [], "entities": [], "docs": ["calendar-notes.md"], "lanes": {"source": ["calendar-notes.md"]}, "g": {"millennium": ["millennium(1, 2)", "2nd millennium"], "century": ["century(1, 17)", "17th century"], "decade": ["decade(1, 1670)", "1670s"], "year": ["year(1674,)", "1674"], "quarter": ["quarter(1674, 2)", "Q2 1674"], "month": ["month(1674, 6)", "Jun 1674"], "week": ["month(1674, 6)", "Jun 1674"], "day": ["month(1674, 6)", "Jun 1674"]}, "issues": [], "change": "", "conf": "medium", "confScore": 65, "confWhy": ["date precise to the month", "calendar conversion uncertainty"], "scope": "", "quote": "", "verify": ""}, {"i": 5, "id": null, "title": "Britain's last Julian day", "details": "", "exact": "2 Sep 1752 (Julian) (= 13 Sep 1752)", "window": "between 13 Sep 1752 and 13 Sep 1752", "precision": "day", "derived": false, "uncertain": false, "conflict": false, "sourceText": "§3", "sources": [{"doc": "calendar-notes.md", "loc": "§3", "date": "2 Sep 1752 (Julian) (= 13 Sep 1752)"}], "tags": [], "entities": [], "docs": ["calendar-notes.md"], "lanes": {"source": ["calendar-notes.md"]}, "g": {"millennium": ["millennium(1, 2)", "2nd millennium"], "century": ["century(1, 18)", "18th century"], "decade": ["decade(1, 1750)", "1750s"], "year": ["year(1752,)", "1752"], "quarter": ["quarter(1752, 3)", "Q3 1752"], "month": ["month(1752, 9)", "Sep 1752"], "week": ["week(1752, 37)", "1752-W37"], "day": ["day(1752, 9, 13)", "13 Sep 1752"]}, "issues": [], "change": "", "conf": "high", "confScore": 85, "confWhy": ["date precise to the day"], "scope": "", "quote": "", "verify": ""}, {"i": 6, "id": null, "title": "Britain's first Gregorian day", "details": "", "exact": "14 Sep 1752", "window": "", "precision": "day", "derived": false, "uncertain": false, "conflict": false, "sourceText": "§3", "sources": [{"doc": "calendar-notes.md", "loc": "§3", "date": "14 Sep 1752"}], "tags": [], "entities": [], "docs": ["calendar-notes.md"], "lanes": {"source": ["calendar-notes.md"]}, "g": {"millennium": ["millennium(1, 2)", "2nd millennium"], "century": ["century(1, 18)", "18th century"], "decade": ["decade(1, 1750)", "1750s"], "year": ["year(1752,)", "1752"], "quarter": ["quarter(1752, 3)", "Q3 1752"], "month": ["month(1752, 9)", "Sep 1752"], "week": ["week(1752, 37)", "1752-W37"], "day": ["day(1752, 9, 14)", "14 Sep 1752"]}, "issues": [], "change": "", "conf": "high", "confScore": 85, "confWhy": ["date precise to the day"], "scope": "", "quote": "", "verify": ""}, {"i": 7, "id": null, "title": "Birth of M. K. Gandhi at Porbandar", "details": "Gujarati (Kartikadi) year; conventionally 2 October 1869, the day the tithi began", "exact": "VS 1925 Bhadrapada Krishna 12 (Dvadashi) [at sunrise on 3 Oct 1869; tithi ran 2 Oct 1869 09:47 to 3 Oct 1869 06:52, UTC+5:30] [Kartikadi year] (= 2 Oct 1869 – 3 Oct 1869)", "window": "between 1 Oct 1869 and 4 Oct 1869", "precision": "month", "derived": false, "uncertain": false, "conflict": false, "sourceText": "§11", "sources": [{"doc": "calendar-notes.md", "loc": "§11", "date": "VS 1925 Bhadrapada Krishna 12 (Dvadashi) [at sunrise on 3 Oct 1869; tithi ran 2 Oct 1869 09:47 to 3 Oct 1869 06:52, UTC+5:30] [Kartikadi year] (= 2 Oct 1869 – 3 Oct 1869)"}], "tags": [], "entities": [], "docs": ["calendar-notes.md"], "lanes": {"source": ["calendar-notes.md"]}, "g": {"millennium": ["millennium(1, 2)", "2nd millennium"], "century": ["century(1, 19)", "19th century"], "decade": ["decade(1, 1860)", "1860s"], "year": ["year(1869,)", "1869"], "quarter": ["quarter(1869, 4)", "Q4 1869"], "month": ["month(1869, 10)", "Oct 1869"], "week": ["month(1869, 10)", "Oct 1869"], "day": ["month(1869, 10)", "Oct 1869"]}, "issues": [], "change": "", "conf": "medium", "confScore": 65, "confWhy": ["date precise to the month", "calendar conversion uncertainty"], "scope": "", "quote": "", "verify": ""}, {"i": 8, "id": null, "title": "October Revolution in Petrograd", "details": "Russia still used the Julian calendar", "exact": "25 Oct 1917 (Julian) (= 7 Nov 1917)", "window": "between 7 Nov 1917 and 7 Nov 1917", "precision": "day", "derived": false, "uncertain": false, "conflict": false, "sourceText": "§4", "sources": [{"doc": "calendar-notes.md", "loc": "§4", "date": "25 Oct 1917 (Julian) (= 7 Nov 1917)"}], "tags": [], "entities": [], "docs": ["calendar-notes.md"], "lanes": {"source": ["calendar-notes.md"]}, "g": {"millennium": ["millennium(1, 2)", "2nd millennium"], "century": ["century(1, 20)", "20th century"], "decade": ["decade(1, 1910)", "1910s"], "year": ["year(1917,)", "1917"], "quarter": ["quarter(1917, 4)", "Q4 1917"], "month": ["month(1917, 11)", "Nov 1917"], "week": ["week(1917, 45)", "1917-W45"], "day": ["day(1917, 11, 7)", "7 Nov 1917"]}, "issues": [], "change": "", "conf": "high", "confScore": 85, "confWhy": ["date precise to the day"], "scope": "", "quote": "", "verify": ""}, {"i": 9, "id": null, "title": "Emperor's surrender broadcast (Gyokuon-hōsō)", "details": "", "exact": "Shōwa 20-08-15 (= 15 Aug 1945)", "window": "between 15 Aug 1945 and 15 Aug 1945", "precision": "day", "derived": false, "uncertain": false, "conflict": false, "sourceText": "§5", "sources": [{"doc": "calendar-notes.md", "loc": "§5", "date": "Shōwa 20-08-15 (= 15 Aug 1945)"}], "tags": [], "entities": [], "docs": ["calendar-notes.md"], "lanes": {"source": ["calendar-notes.md"]}, "g": {"millennium": ["millennium(1, 2)", "2nd millennium"], "century": ["century(1, 20)", "20th century"], "decade": ["decade(1, 1940)", "1940s"], "year": ["year(1945,)", "1945"], "quarter": ["quarter(1945, 3)", "Q3 1945"], "month": ["month(1945, 8)", "Aug 1945"], "week": ["week(1945, 33)", "1945-W33"], "day": ["day(1945, 8, 15)", "15 Aug 1945"]}, "issues": [], "change": "", "conf": "high", "confScore": 85, "confWhy": ["date precise to the day"], "scope": "", "quote": "", "verify": ""}, {"i": 10, "id": null, "title": "Statute dated in the 2nd regnal year of Elizabeth II", "details": "", "exact": "year 2 of Elizabeth II (= 6 Feb 1953 – 5 Feb 1954)", "window": "between 6 Feb 1953 and 5 Feb 1954", "precision": "decade", "derived": false, "uncertain": false, "conflict": false, "sourceText": "§6", "sources": [{"doc": "calendar-notes.md", "loc": "§6", "date": "year 2 of Elizabeth II (= 6 Feb 1953 – 5 Feb 1954)"}], "tags": [], "entities": [], "docs": ["calendar-notes.md"], "lanes": {"source": ["calendar-notes.md"]}, "g": {"millennium": ["millennium(1, 2)", "2nd millennium"], "century": ["century(1, 20)", "20th century"], "decade": ["decade(1, 1950)", "1950s"], "year": ["decade(1, 1950)", "1950s"], "quarter": ["decade(1, 1950)", "1950s"], "month": ["decade(1, 1950)", "1950s"], "week": ["decade(1, 1950)", "1950s"], "day": ["decade(1, 1950)", "1950s"]}, "issues": [], "change": "", "conf": "low", "confScore": 45, "confWhy": ["date precise to the decade"], "scope": "", "quote": "", "verify": ""}, {"i": 11, "id": null, "title": "Adhika (leap) Shravana month", "details": "", "exact": "VS 2080 Adhika Shravana (= 18 Jul 2023 – 16 Aug 2023)", "window": "between 17 Jul 2023 and 17 Aug 2023", "precision": "quarter", "derived": false, "uncertain": false, "conflict": false, "sourceText": "§12", "sources": [{"doc": "calendar-notes.md", "loc": "§12", "date": "VS 2080 Adhika Shravana (= 18 Jul 2023 – 16 Aug 2023)"}], "tags": [], "entities": [], "docs": ["calendar-notes.md"], "lanes": {"source": ["calendar-notes.md"]}, "g": {"millennium": ["millennium(1, 3)", "3rd millennium"], "century": ["century(1, 21)", "21st century"], "decade": ["decade(1, 2020)", "2020s"], "year": ["year(2023,)", "2023"], "quarter": ["quarter(2023, 3)", "Q3 2023"], "month": ["quarter(2023, 3)", "Q3 2023"], "week": ["quarter(2023, 3)", "Q3 2023"], "day": ["quarter(2023, 3)", "Q3 2023"]}, "issues": [], "change": "", "conf": "medium", "confScore": 60, "confWhy": ["date precise to the quarter", "calendar conversion uncertainty"], "scope": "", "quote": "", "verify": ""}, {"i": 12, "id": null, "title": "US federal fiscal year 2024", "details": "", "exact": "FY2024 (= 1 Oct 2023 – 30 Sep 2024)", "window": "between 1 Oct 2023 and 30 Sep 2024", "precision": "decade", "derived": false, "uncertain": false, "conflict": false, "sourceText": "§7", "sources": [{"doc": "calendar-notes.md", "loc": "§7", "date": "FY2024 (= 1 Oct 2023 – 30 Sep 2024)"}], "tags": [], "entities": [], "docs": ["calendar-notes.md"], "lanes": {"source": ["calendar-notes.md"]}, "g": {"millennium": ["millennium(1, 3)", "3rd millennium"], "century": ["century(1, 21)", "21st century"], "decade": ["decade(1, 2020)", "2020s"], "year": ["decade(1, 2020)", "2020s"], "quarter": ["decade(1, 2020)", "2020s"], "month": ["decade(1, 2020)", "2020s"], "week": ["decade(1, 2020)", "2020s"], "day": ["decade(1, 2020)", "2020s"]}, "issues": [], "change": "", "conf": "low", "confScore": 45, "confWhy": ["date precise to the decade"], "scope": "", "quote": "", "verify": ""}, {"i": 13, "id": null, "title": "Ramadan 1445 AH", "details": "", "exact": "Ramadan 1445 AH (= 11 Mar 2024 – 9 Apr 2024)", "window": "between 9 Mar 2024 and 10 Apr 2024", "precision": "year", "derived": false, "uncertain": true, "conflict": false, "sourceText": "§9", "sources": [{"doc": "calendar-notes.md", "loc": "§9", "date": "Ramadan 1445 AH (= 11 Mar 2024 – 9 Apr 2024)"}], "tags": [], "entities": [], "docs": ["calendar-notes.md"], "lanes": {"source": ["calendar-notes.md"]}, "g": {"millennium": ["millennium(1, 3)", "3rd millennium"], "century": ["century(1, 21)", "21st century"], "decade": ["decade(1, 2020)", "2020s"], "year": ["year(2024,)", "2024"], "quarter": ["year(2024,)", "2024"], "month": ["year(2024,)", "2024"], "week": ["year(2024,)", "2024"], "day": ["year(2024,)", "2024"]}, "issues": [], "change": "", "conf": "medium", "confScore": 55, "confWhy": ["date precise to the year", "calendar conversion uncertainty"], "scope": "", "quote": "", "verify": ""}, {"i": 14, "id": null, "title": "Purim 5784", "details": "", "exact": "14 Adar II 5784 AM (= 24 Mar 2024)", "window": "between 24 Mar 2024 and 24 Mar 2024", "precision": "day", "derived": false, "uncertain": true, "conflict": false, "sourceText": "§8", "sources": [{"doc": "calendar-notes.md", "loc": "§8", "date": "14 Adar II 5784 AM (= 24 Mar 2024)"}], "tags": [], "entities": [], "docs": ["calendar-notes.md"], "lanes": {"source": ["calendar-notes.md"]}, "g": {"millennium": ["millennium(1, 3)", "3rd millennium"], "century": ["century(1, 21)", "21st century"], "decade": ["decade(1, 2020)", "2020s"], "year": ["year(2024,)", "2024"], "quarter": ["quarter(2024, 1)", "Q1 2024"], "month": ["month(2024, 3)", "Mar 2024"], "week": ["week(2024, 12)", "2024-W12"], "day": ["day(2024, 3, 24)", "24 Mar 2024"]}, "issues": [], "change": "", "conf": "high", "confScore": 80, "confWhy": ["date precise to the day", "calendar conversion uncertainty"], "scope": "", "quote": "", "verify": ""}, {"i": 15, "id": null, "title": "Ram Navami 2081", "details": "", "exact": "VS 2081 Chaitra Shukla 9 (Navami) [at sunrise on 17 Apr 2024; tithi ran 16 Apr 2024 13:25 to 17 Apr 2024 15:15, UTC+5:30] (= 16 Apr 2024 – 17 Apr 2024)", "window": "between 15 Apr 2024 and 18 Apr 2024", "precision": "month", "derived": false, "uncertain": false, "conflict": false, "sourceText": "§12", "sources": [{"doc": "calendar-notes.md", "loc": "§12", "date": "VS 2081 Chaitra Shukla 9 (Navami) [at sunrise on 17 Apr 2024; tithi ran 16 Apr 2024 13:25 to 17 Apr 2024 15:15, UTC+5:30] (= 16 Apr 2024 – 17 Apr 2024)"}], "tags": [], "entities": [], "docs": ["calendar-notes.md"], "lanes": {"source": ["calendar-notes.md"]}, "g": {"millennium": ["millennium(1, 3)", "3rd millennium"], "century": ["century(1, 21)", "21st century"], "decade": ["decade(1, 2020)", "2020s"], "year": ["year(2024,)", "2024"], "quarter": ["quarter(2024, 2)", "Q2 2024"], "month": ["month(2024, 4)", "Apr 2024"], "week": ["month(2024, 4)", "Apr 2024"], "day": ["month(2024, 4)", "Apr 2024"]}, "issues": [], "change": "", "conf": "medium", "confScore": 65, "confWhy": ["date precise to the month", "calendar conversion uncertainty"], "scope": "", "quote": "", "verify": ""}, {"i": 16, "id": null, "title": "Rosh Hashanah 5785", "details": "", "exact": "1 Tishrei 5785 AM (= 3 Oct 2024)", "window": "between 3 Oct 2024 and 3 Oct 2024", "precision": "day", "derived": false, "uncertain": false, "conflict": false, "sourceText": "§8", "sources": [{"doc": "calendar-notes.md", "loc": "§8", "date": "1 Tishrei 5785 AM (= 3 Oct 2024)"}], "tags": [], "entities": [], "docs": ["calendar-notes.md"], "lanes": {"source": ["calendar-notes.md"]}, "g": {"millennium": ["millennium(1, 3)", "3rd millennium"], "century": ["century(1, 21)", "21st century"], "decade": ["decade(1, 2020)", "2020s"], "year": ["year(2024,)", "2024"], "quarter": ["quarter(2024, 4)", "Q4 2024"], "month": ["month(2024, 10)", "Oct 2024"], "week": ["week(2024, 40)", "2024-W40"], "day": ["day(2024, 10, 3)", "3 Oct 2024"]}, "issues": [], "change": "", "conf": "high", "confScore": 80, "confWhy": ["date precise to the day", "calendar conversion uncertainty"], "scope": "", "quote": "", "verify": ""}, {"i": 17, "id": null, "title": "Holi (Phalguna Purnima)", "details": "", "exact": "VS 2081 Phalguna Shukla (Purnima) [at sunrise on 14 Mar 2025; tithi ran 13 Mar 2025 10:37 to 14 Mar 2025 12:25, UTC+5:30] [purnimanta] (= 13 Mar 2025 – 14 Mar 2025)", "window": "between 12 Mar 2025 and 15 Mar 2025", "precision": "month", "derived": false, "uncertain": false, "conflict": false, "sourceText": "§12", "sources": [{"doc": "calendar-notes.md", "loc": "§12", "date": "VS 2081 Phalguna Shukla (Purnima) [at sunrise on 14 Mar 2025; tithi ran 13 Mar 2025 10:37 to 14 Mar 2025 12:25, UTC+5:30] [purnimanta] (= 13 Mar 2025 – 14 Mar 2025)"}], "tags": [], "entities": [], "docs": ["calendar-notes.md"], "lanes": {"source": ["calendar-notes.md"]}, "g": {"millennium": ["millennium(1, 3)", "3rd millennium"], "century": ["century(1, 21)", "21st century"], "decade": ["decade(1, 2020)", "2020s"], "year": ["year(2025,)", "2025"], "quarter": ["quarter(2025, 1)", "Q1 2025"], "month": ["month(2025, 3)", "Mar 2025"], "week": ["month(2025, 3)", "Mar 2025"], "day": ["month(2025, 3)", "Mar 2025"]}, "issues": [], "change": "", "conf": "medium", "confScore": 65, "confWhy": ["date precise to the month", "calendar conversion uncertainty"], "scope": "", "quote": "", "verify": ""}], "issues": [{"severity": "INFO", "kind": "calendar", "message": "Hindu panchang dates use the drik (astronomical) method with Lahiri ayanamsa and sunrise at Delhi, amanta months; published panchangs can differ by a day, and festivals often follow other rules than the sunrise tithi", "cls": "info", "events": []}, {"severity": "INFO", "kind": "calendar", "message": "tabular Islamic calendar; observed dates can differ by 1-2 days, and the day begins at sunset", "cls": "info", "events": []}, {"severity": "INFO", "kind": "calendar", "message": "the Hebrew day begins at sunset on the previous civil day", "cls": "info", "events": []}, {"severity": "INFO", "kind": "calendar", "message": "Hindu panchang dates use the drik (astronomical) method with Lahiri ayanamsa and sunrise at Delhi, purnimanta months; published panchangs can differ by a day, and festivals often follow other rules than the sunrise tithi", "cls": "info", "events": []}], "gaps": [{"text": "117 years: after 'Britain's first Gregorian day' (14 Sep 1752) → before 'Birth of M. K. Gandhi at Porbandar' (VS 1925 Bhadrapada Krishna 12 (Dvadashi) [at sunrise on 3 Oct 1869; tithi ran 2 Oct 1869 09:47 to 3 Oct 1869 06:52, UTC+5:30] [Kartikadi year] (= 2 Oct 1869 – 3 Oct 1869))", "events": [6, 7]}, {"text": "78 years: after 'Coronation of Shivaji at Raigad' (Shaka 1596 Jyeshtha Shukla 13 (Trayodashi) [at sunrise on 16 Jun 1674; tithi ran 15 Jun 1674 14:41 to 16 Jun 1674 13:39, UTC+5:30] (= 15 Jun 1674 – 16 Jun 1674)) → before 'Britain's last Julian day' (2 Sep 1752 (Julian) (= 13 Sep 1752))", "events": [4, 5]}, {"text": "69 years: after 'Statute dated in the 2nd regnal year of Elizabeth II' (year 2 of Elizabeth II (= 6 Feb 1953 – 5 Feb 1954)) → before 'Adhika (leap) Shravana month' (VS 2080 Adhika Shravana (= 18 Jul 2023 – 16 Aug 2023))", "events": [10, 11]}, {"text": "58 years: after 'Shakespeare dies in Stratford (Julian calendar, England)' (23 Apr 1616 (Julian) (= 3 May 1616)) → before 'Coronation of Shivaji at Raigad' (Shaka 1596 Jyeshtha Shukla 13 (Trayodashi) [at sunrise on 16 Jun 1674; tithi ran 15 Jun 1674 14:41 to 16 Jun 1674 13:39, UTC+5:30] (= 15 Jun 1674 – 16 Jun 1674))", "events": [3, 4]}, {"text": "48 years: after 'Birth of M. K. Gandhi at Porbandar' (VS 1925 Bhadrapada Krishna 12 (Dvadashi) [at sunrise on 3 Oct 1869; tithi ran 2 Oct 1869 09:47 to 3 Oct 1869 06:52, UTC+5:30] [Kartikadi year] (= 2 Oct 1869 – 3 Oct 1869)) → before 'October Revolution in Petrograd' (25 Oct 1917 (Julian) (= 7 Nov 1917))", "events": [7, 8]}], "undated": [{"title": "Chinese New Year 4722", "source": "§10", "why": "the Chinese lunisolar calendar needs astronomical tables; convert to Gregorian by hand and keep the original in details"}], "told": [{"i": 0, "title": "Last day of the Julian calendar in Catholic countries", "rank": 1, "move": "", "when": "4 Oct 1582 (Julian) (= 14 Oct 1582)"}, {"i": 1, "title": "First day of the Gregorian calendar", "rank": 2, "move": "", "when": "15 Oct 1582"}, {"i": 2, "title": "Cervantes dies in Madrid (Gregorian calendar)", "rank": 3, "move": "", "when": "22 Apr 1616"}, {"i": 3, "title": "Shakespeare dies in Stratford (Julian calendar, England)", "rank": 4, "move": "", "when": "23 Apr 1616 (Julian) (= 3 May 1616)"}, {"i": 5, "title": "Britain's last Julian day", "rank": 6, "move": "↪ flash-forward 136 years (skips 1 event told later)", "when": "2 Sep 1752 (Julian) (= 13 Sep 1752)"}, {"i": 6, "title": "Britain's first Gregorian day", "rank": 7, "move": "↪ flash-forward 136 years (skips 1 event told later)", "when": "14 Sep 1752"}, {"i": 8, "title": "October Revolution in Petrograd", "rank": 9, "move": "↪ flash-forward 302 years (skips 2 events told later)", "when": "25 Oct 1917 (Julian) (= 7 Nov 1917)"}, {"i": 9, "title": "Emperor's surrender broadcast (Gyokuon-hōsō)", "rank": 10, "move": "↪ flash-forward 329 years (skips 2 events told later)", "when": "Shōwa 20-08-15 (= 15 Aug 1945)"}, {"i": 10, "title": "Statute dated in the 2nd regnal year of Elizabeth II", "rank": 11, "move": "↪ flash-forward 337 years (skips 2 events told later)", "when": "year 2 of Elizabeth II (= 6 Feb 1953 – 5 Feb 1954)"}, {"i": 12, "title": "US federal fiscal year 2024", "rank": 13, "move": "↪ flash-forward 407 years (skips 3 events told later)", "when": "FY2024 (= 1 Oct 2023 – 30 Sep 2024)"}, {"i": 14, "title": "Purim 5784", "rank": 15, "move": "↪ flash-forward 408 years (skips 4 events told later)", "when": "14 Adar II 5784 AM (= 24 Mar 2024)"}, {"i": 13, "title": "Ramadan 1445 AH", "rank": 14, "move": "↪ flash-forward 408 years (skips 3 events told later)", "when": "Ramadan 1445 AH (= 11 Mar 2024 – 9 Apr 2024)"}, {"i": 16, "title": "Rosh Hashanah 5785", "rank": 17, "move": "↪ flash-forward 408 years (skips 4 events told later)", "when": "1 Tishrei 5785 AM (= 3 Oct 2024)"}, {"i": null, "title": "Chinese New Year 4722", "rank": null, "move": "undated", "when": "undated"}, {"i": 4, "title": "Coronation of Shivaji at Raigad", "rank": 5, "move": "→ resumes", "when": "Shaka 1596 Jyeshtha Shukla 13 (Trayodashi) [at sunrise on 16 Jun 1674; tithi ran 15 Jun 1674 14:41 to 16 Jun 1674 13:39, UTC+5:30] (= 15 Jun 1674 – 16 Jun 1674)"}, {"i": 7, "title": "Birth of M. K. Gandhi at Porbandar", "rank": 8, "move": "", "when": "VS 1925 Bhadrapada Krishna 12 (Dvadashi) [at sunrise on 3 Oct 1869; tithi ran 2 Oct 1869 09:47 to 3 Oct 1869 06:52, UTC+5:30] [Kartikadi year] (= 2 Oct 1869 – 3 Oct 1869)"}, {"i": 15, "title": "Ram Navami 2081", "rank": 16, "move": "↪ flash-forward 155 years (skips 1 event told later)", "when": "VS 2081 Chaitra Shukla 9 (Navami) [at sunrise on 17 Apr 2024; tithi ran 16 Apr 2024 13:25 to 17 Apr 2024 15:15, UTC+5:30] (= 16 Apr 2024 – 17 Apr 2024)"}, {"i": 11, "title": "Adhika (leap) Shravana month", "rank": 12, "move": "→ resumes", "when": "VS 2080 Adhika Shravana (= 18 Jul 2023 – 16 Aug 2023)"}, {"i": 17, "title": "Holi (Phalguna Purnima)", "rank": 18, "move": "", "when": "VS 2081 Phalguna Shukla (Purnima) [at sunrise on 14 Mar 2025; tithi ran 13 Mar 2025 10:37 to 14 Mar 2025 12:25, UTC+5:30] [purnimanta] (= 13 Mar 2025 – 14 Mar 2025)"}], "toldSummary": "19 event(s) in telling order; 0 flashback(s), 10 flash-forward(s). Linearity: 82% of steps move forward in story time.", "changes": [], "answer": []}</script>
+<script>
+(function () {
+  var D = JSON.parse(document.getElementById('data').textContent);
+  function $(id) { return document.getElementById(id); }
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return {'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c];
+    });
+  }
+  var S = {level: D.granularity, view: 'timeline', lane: D.laneFields[0], q: '',
+           f: {tags: {}, entities: {}, docs: {}}, flagged: false, open: {}, hl: {}, minConf: 0};
+  try {
+    var saved = localStorage.getItem('chronology-theme');
+    if (saved) document.documentElement.setAttribute('data-theme', saved);
+  } catch (e) {}
+
+  $('title').textContent = D.title;
+  $('stats').textContent = D.stats;
+  if (D.answer.length) {
+    $('answer').hidden = false;
+    $('answer').innerHTML = D.answer.map(function (l) { return '<div>' + esc(l) + '</div>'; }).join('');
+  }
+  var CONF = {low: 0, medium: 1, high: 2};
+
+  D.levels.forEach(function (l) {
+    var o = document.createElement('option');
+    o.value = l[0]; o.textContent = l[1]; o.selected = l[0] === S.level;
+    $('level').appendChild(o);
+  });
+  D.laneFields.forEach(function (f) {
+    var o = document.createElement('option');
+    o.value = f; o.textContent = 'by ' + f; $('lane-field').appendChild(o);
+  });
+
+  var FACETS = [['entities', 'Who'], ['tags', 'Tags'], ['docs', 'Sources']];
+  var fhtml = '';
+  FACETS.forEach(function (fc) {
+    var vals = [];
+    D.events.forEach(function (e) {
+      e[fc[0]].forEach(function (v) { if (vals.indexOf(v) < 0) vals.push(v); });
+    });
+    if (vals.length < (fc[0] === 'docs' ? 2 : 1)) return;
+    fhtml += '<span>' + fc[1] + '</span>' + vals.map(function (v) {
+      return '<button class="chip" aria-pressed="false" data-k="' + fc[0] + '" data-v="' +
+        esc(v) + '">' + esc(v) + '</button>';
+    }).join('');
+  });
+  $('facets').innerHTML = fhtml;
+
+  function active(k) { return Object.keys(S.f[k]); }
+  function match(e) {
+    if (S.flagged && !(e.uncertain || e.conflict || e.issues.length)) return false;
+    if (CONF[e.conf] < S.minConf) return false;
+    for (var n = 0; n < FACETS.length; n++) {
+      var k = FACETS[n][0], sel = active(k);
+      if (sel.length && !e[k].some(function (v) { return S.f[k][v]; })) return false;
+    }
+    if (S.q) {
+      var hay = [e.title, e.details, e.sourceText, e.exact, e.tags.join(' '),
+                 e.entities.join(' ')].join(' ').toLowerCase();
+      if (hay.indexOf(S.q) < 0) return false;
+    }
+    return true;
+  }
+  function groups(list) {
+    var out = [];
+    list.forEach(function (e) {
+      var g = e.g[S.level], last = out[out.length - 1];
+      if (last && last.k === g[0]) last.items.push(e);
+      else out.push({k: g[0], lab: g[1], items: [e]});
+    });
+    return out;
+  }
+  function card(e, lane) {
+    var when = e.exact;
+    if (lane && S.lane === 'source') {
+      // In a source's lane, show the date that source gives.
+      e.sources.forEach(function (s) { if (s.doc === lane && s.date) when = s.date; });
+    }
+    var marks = (e.uncertain ? '<span class="mark" title="Could have happened before the previous event">≈</span>' : '') +
+                (e.conflict ? '<span class="mark" title="Sources disagree on the date">⚠</span>' : '');
+    var sevs = {};
+    e.issues.forEach(function (n) { sevs[D.issues[n].cls] = D.issues[n].severity; });
+    var badges = Object.keys(sevs).map(function (c) {
+      return '<span class="badge b-' + c + '">' + sevs[c] + '</span>';
+    }).join('') + (e.change ? '<span class="badge b-new" title="' + esc(e.change) + '">' +
+      (e.change === 'new' ? 'NEW' : 'CHANGED') + '</span>' : '') +
+      (e.verify === 'not found' ? '<span class="badge b-err">QUOTE NOT FOUND</span>' : '') +
+      (e.conf === 'low' ? '<span class="badge b-low" title="' + esc(e.confWhy.join('; ')) +
+       '">LOW CONFIDENCE</span>' : '') +
+      (e.scope ? '<span class="badge b-info">' + esc(e.scope) + '</span>' : '');
+    var more = '';
+    if (e.details) more += '<p>' + esc(e.details) + '</p>';
+    if (e.window) more += '<p class="tagline">Possible dates: ' + esc(e.window) + '</p>';
+    if (e.quote) more += '<p class="tagline">“' + esc(e.quote) + '”' +
+      (e.verify ? ' — ' + esc(e.verify === 'verified' ? 'verified in source' : e.verify) : '') + '</p>';
+    more += '<p class="tagline">Confidence: ' + esc(e.conf) + ' (' + e.confScore + '/100) — ' +
+      esc(e.confWhy.join('; ')) + '</p>';
+    if (e.sources.length) {
+      more += '<table>' + e.sources.map(function (s) {
+        return '<tr><td>' + esc(s.loc || '—') + '</td><td>' + esc(s.doc) + '</td><td>' +
+          esc(s.date) + '</td></tr>';
+      }).join('') + '</table>';
+    }
+    var labels = e.entities.concat(e.tags);
+    if (labels.length) more += '<p class="tagline">' + esc(labels.join(' · ')) + '</p>';
+    e.issues.forEach(function (n) {
+      var x = D.issues[n];
+      more += '<p><span class="badge b-' + x.cls + '">' + x.severity + '</span> ' +
+        esc(x.message) + '</p>';
+    });
+    return '<article class="ev' + (S.open[e.i] ? ' open' : '') + (S.hl[e.i] ? ' hl' : '') +
+      '" data-i="' + e.i + '"' + (lane ? '' : ' id="ev-' + e.i + '"') +
+      '><div class="when">' + esc(when) +
+      '</div><div class="t">' + marks + esc(e.title) + (e.derived ? ' <span class="tagline">[derived]</span>' : '') +
+      badges + '</div><div class="more">' + more + '</div></article>';
+  }
+  function lanesOf(e) {
+    var v = e.lanes[S.lane] || [];
+    return v.length ? v : ['(other)'];
+  }
+  function render() {
+    var list = D.events.filter(match), gs = groups(list);
+    var max = 1;
+    gs.forEach(function (g) { max = Math.max(max, g.items.length); });
+    $('density').innerHTML = gs.map(function (g, ix) {
+      return '<button data-g="' + ix + '" style="height:' +
+        Math.max(10, Math.round(g.items.length / max * 100)) + '%" title="' +
+        esc(g.lab) + ': ' + g.items.length + '" aria-label="' + esc(g.lab) + ', ' +
+        g.items.length + ' events"></button>';
+    }).join('');
+    if (S.view === 'told') {
+      var keep = {};
+      list.forEach(function (e) { keep[e.i] = true; });
+      var rows = D.told.filter(function (t) {
+        return t.i === null ? !S.flagged && !S.q : keep[t.i];
+      });
+      $('view').innerHTML = '<div class="told"><p class="tagline">' + esc(D.toldSummary) +
+        '</p><table><thead><tr><th>Told</th><th>Story #</th><th>When</th><th>Event</th>' +
+        '<th>Movement</th></tr></thead><tbody>' + rows.map(function (t) {
+          return '<tr><td>' + (D.told.indexOf(t) + 1) + '</td><td>' + (t.rank || '—') +
+            '</td><td>' + esc(t.when) + '</td><td>' + esc(t.title) + '</td><td class="mv">' +
+            esc(t.move) + '</td></tr>';
+        }).join('') + '</tbody></table></div>';
+    } else if (!gs.length) {
+      $('view').innerHTML = '<p class="empty">No events match.</p>';
+    } else if (S.view === 'timeline') {
+      $('view').innerHTML = gs.map(function (g, ix) {
+        return '<section class="period" id="g-' + ix + '"><h3>' + esc(g.lab) + '<small>' +
+          g.items.length + '</small></h3>' + g.items.map(function (e) { return card(e); }).join('') +
+          '</section>';
+      }).join('');
+    } else {
+      var names = [];
+      list.forEach(function (e) {
+        lanesOf(e).forEach(function (v) { if (names.indexOf(v) < 0) names.push(v); });
+      });
+      var oi = names.indexOf('(other)');
+      if (oi >= 0) { names.splice(oi, 1); names.push('(other)'); }
+      $('view').innerHTML = '<div class="lanes"><table><thead><tr><th>When</th>' +
+        names.map(function (n) { return '<th>' + esc(n) + '</th>'; }).join('') +
+        '</tr></thead><tbody>' + gs.map(function (g, ix) {
+          return '<tr><td class="when" id="g-' + ix + '">' + esc(g.lab) + '<small>' +
+            g.items.length + '</small></td>' + names.map(function (n) {
+              return '<td>' + g.items.filter(function (e) {
+                return lanesOf(e).indexOf(n) >= 0;
+              }).map(function (e) { return card(e, n); }).join('') + '</td>';
+            }).join('') + '</tr>';
+        }).join('') + '</tbody></table></div>';
+    }
+    var busy = gs.filter(function (g) { return g.items.length > 1; })
+      .sort(function (a, b) { return b.items.length - a.items.length; }).slice(0, 5);
+    $('busy').innerHTML = busy.length ? busy.map(function (g) {
+      return '<div class="gap" data-g="' + gs.indexOf(g) + '">' + esc(g.lab) + ': ' +
+        g.items.length + ' event' + (g.items.length === 1 ? '' : 's') + '</div>';
+    }).join('') : '<div class="tagline">No period at this zoom has more than one event.</div>';
+  }
+
+  $('report').innerHTML = D.issues.length ? D.issues.map(function (x, n) {
+    return '<div class="issue" data-n="' + n + '"><span class="badge b-' + x.cls + '">' +
+      x.severity + '</span> <b>' + esc(x.kind) + '</b> ' + esc(x.message) + '</div>';
+  }).join('') : '<div class="tagline">No problems found.</div>';
+  $('gaps').innerHTML = D.gaps.length ? D.gaps.map(function (g, n) {
+    return '<div class="gap" data-gap="' + n + '">' + esc(g.text) + '</div>';
+  }).join('') : '<div class="tagline">No certain gaps.</div>';
+  if (D.undated.length) {
+    $('undated').innerHTML = D.undated.map(function (u) {
+      return '<div>' + esc(u.title) + (u.source ? ' <span class="tagline">[' + esc(u.source) + ']</span>' : '') +
+        (u.why ? '<div class="tagline">Date not usable: ' + esc(u.why) + '</div>' : '') + '</div>';
+    }).join('');
+  } else { $('undated-sec').hidden = true; }
+
+  function focusEvents(ids) {
+    S.hl = {}; S.flagged = false; S.q = ''; $('q').value = '';
+    $('flagged').setAttribute('aria-pressed', 'false');
+    FACETS.forEach(function (fc) { S.f[fc[0]] = {}; });
+    Array.prototype.forEach.call(document.querySelectorAll('.chip'), function (c) {
+      c.setAttribute('aria-pressed', 'false');
+    });
+    ids.forEach(function (i) { S.hl[i] = true; S.open[i] = true; });
+    render();
+    var el = ids.length && document.querySelector('.ev[data-i="' + ids[0] + '"]');
+    if (el) el.scrollIntoView({behavior: 'smooth', block: 'center'});
+  }
+
+  $('level').onchange = function () { S.level = this.value; render(); };
+  $('conf').onchange = function () { S.minConf = +this.value; render(); };
+  $('lane-field').onchange = function () { S.lane = this.value; render(); };
+  function setView(v) {
+    S.view = v;
+    $('v-timeline').setAttribute('aria-pressed', String(v === 'timeline'));
+    $('v-lanes').setAttribute('aria-pressed', String(v === 'lanes'));
+    $('v-told').setAttribute('aria-pressed', String(v === 'told'));
+    $('lane-field').hidden = v !== 'lanes';
+    document.body.classList.toggle('lanes-mode', v === 'lanes');
+    render();
+  }
+  $('v-timeline').onclick = function () { setView('timeline'); };
+  $('v-lanes').onclick = function () { setView('lanes'); };
+  $('v-told').onclick = function () { setView('told'); };
+  if (!D.told.length) $('v-told').hidden = true;
+  if (D.changes.length) {
+    $('changes').innerHTML = D.changes.map(function (c, n) {
+      return '<div' + (n ? '' : ' class="tagline"') + '>' + esc(c) + '</div>';
+    }).join('');
+  } else { $('changes-sec').hidden = true; }
+  $('q').oninput = function () { S.q = this.value.trim().toLowerCase(); render(); };
+  $('flagged').onclick = function () {
+    S.flagged = !S.flagged; this.setAttribute('aria-pressed', String(S.flagged)); render();
+  };
+  $('theme').onclick = function () {
+    var root = document.documentElement, cur = root.getAttribute('data-theme');
+    if (!cur) cur = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    var next = cur === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('chronology-theme', next); } catch (e) {}
+  };
+  $('facets').onclick = function (ev) {
+    var c = ev.target.closest('.chip'); if (!c) return;
+    var k = c.getAttribute('data-k'), v = c.getAttribute('data-v');
+    if (S.f[k][v]) delete S.f[k][v]; else S.f[k][v] = true;
+    c.setAttribute('aria-pressed', String(!!S.f[k][v]));
+    render();
+  };
+  $('view').onclick = function (ev) {
+    if (ev.target.closest('.more')) return;
+    var a = ev.target.closest('.ev'); if (!a) return;
+    var i = +a.getAttribute('data-i');
+    S.open[i] = !S.open[i];
+    a.classList.toggle('open', S.open[i]);
+  };
+  function scrollToGroup(ix) {
+    var el = $('g-' + ix);
+    if (el) el.scrollIntoView({behavior: 'smooth', block: 'start'});
+  }
+  $('density').onclick = function (ev) {
+    var b = ev.target.closest('button'); if (b) scrollToGroup(b.getAttribute('data-g'));
+  };
+  $('busy').onclick = function (ev) {
+    var b = ev.target.closest('.gap'); if (b) scrollToGroup(b.getAttribute('data-g'));
+  };
+  $('report').onclick = function (ev) {
+    var x = ev.target.closest('.issue'); if (x) focusEvents(D.issues[+x.getAttribute('data-n')].events);
+  };
+  $('gaps').onclick = function (ev) {
+    var x = ev.target.closest('.gap'); if (x) focusEvents(D.gaps[+x.getAttribute('data-gap')].events);
+  };
+  render();
+})();
+</script>
+</body>
+</html>
+

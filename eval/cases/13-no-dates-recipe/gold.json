@@ -1,0 +1,15 @@
+{
+ "id": "13-no-dates-recipe",
+ "prompt": "Put this in chronological order as a timeline.",
+ "inputs": [
+  "recipe.md"
+ ],
+ "should_trigger": true,
+ "events": [],
+ "expect": {
+  "forbidden_dates": true,
+  "answer_patterns": [
+   "(?i)(no (calendar )?dates|not dated|doesn't (contain|have|include) (any )?dates|does not (contain|have|include) (any )?dates|relative|sequence|T\\+|minute)"
+  ]
+ }
+}

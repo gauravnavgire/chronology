@@ -1,0 +1,397 @@
+{
+ "id": "12-long-company-history",
+ "prompt": "Here's our company history document. Make a chronology at year level as a tree, grouped by decade.",
+ "inputs": [
+  "company-history.md"
+ ],
+ "should_trigger": true,
+ "events": [
+  {
+   "key": "m01",
+   "window": [
+    "1962",
+    "1962"
+   ],
+   "keywords": [
+    "founded",
+    "workshop"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "m02",
+   "window": [
+    "1964-03",
+    "1964-03"
+   ],
+   "keywords": [
+    "employee",
+    "joan"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "m03",
+   "window": [
+    "1967",
+    "1967"
+   ],
+   "keywords": [
+    "kirkstall"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "m04",
+   "window": [
+    "1969-11-02",
+    "1969-11-02"
+   ],
+   "keywords": [
+    "export",
+    "rotterdam"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "m05",
+   "window": [
+    "1971",
+    "1971"
+   ],
+   "keywords": [
+    "incorporated"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "m06",
+   "window": [
+    "1973-10",
+    "1973-10"
+   ],
+   "keywords": [
+    "oil crisis"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "m07",
+   "window": [
+    "1975",
+    "1975"
+   ],
+   "keywords": [
+    "hospital"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "m08",
+   "window": [
+    "1978-06-19",
+    "1978-06-19"
+   ],
+   "keywords": [
+    "bradford"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "m09",
+   "window": [
+    "1980",
+    "1980"
+   ],
+   "keywords": [
+    "200",
+    "workforce"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "m10",
+   "window": [
+    "1983-09",
+    "1983-09"
+   ],
+   "keywords": [
+    "m-series"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "m11",
+   "window": [
+    "1985",
+    "1985"
+   ],
+   "keywords": [
+    "queen",
+    "award"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "m12",
+   "window": [
+    "1987-10-19",
+    "1987-10-19"
+   ],
+   "keywords": [
+    "black monday",
+    "bought back"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "m13",
+   "window": [
+    "1990",
+    "1990"
+   ],
+   "keywords": [
+    "archer",
+    "retired"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "m14",
+   "window": [
+    "1992-04",
+    "1992-04"
+   ],
+   "keywords": [
+    "managing director"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "m15",
+   "window": [
+    "1994",
+    "1994"
+   ],
+   "keywords": [
+    "lyon"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "m16",
+   "window": [
+    "1997-07-01",
+    "1997-07-01"
+   ],
+   "keywords": [
+    "website"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "m17",
+   "window": [
+    "1999",
+    "1999"
+   ],
+   "keywords": [
+    "iso"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "m18",
+   "window": [
+    "2001-01",
+    "2001-01"
+   ],
+   "keywords": [
+    "pennine"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "m19",
+   "window": [
+    "2003",
+    "2003"
+   ],
+   "keywords": [
+    "flood"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "m20",
+   "window": [
+    "2005-05-16",
+    "2005-05-16"
+   ],
+   "keywords": [
+    "reopened"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "m21",
+   "window": [
+    "2008",
+    "2008"
+   ],
+   "keywords": [
+    "financial crisis"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "m22",
+   "window": [
+    "2010-02",
+    "2010-02"
+   ],
+   "keywords": [
+    "electric"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "m23",
+   "window": [
+    "2012",
+    "2012"
+   ],
+   "keywords": [
+    "retired",
+    "48"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "m24",
+   "window": [
+    "2014-09-08",
+    "2014-09-08"
+   ],
+   "keywords": [
+    "aim"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "m25",
+   "window": [
+    "2016",
+    "2016"
+   ],
+   "keywords": [
+    "research",
+    "university"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "m26",
+   "window": [
+    "2018-03",
+    "2018-03"
+   ],
+   "keywords": [
+    "recall",
+    "e4"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "m27",
+   "window": [
+    "2020-03-23",
+    "2020-03-23"
+   ],
+   "keywords": [
+    "lockdown"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "m28",
+   "window": [
+    "2020-06",
+    "2020-06"
+   ],
+   "keywords": [
+    "shift"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "m29",
+   "window": [
+    "2022",
+    "2022"
+   ],
+   "keywords": [
+    "100 million",
+    "revenue"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "m30",
+   "window": [
+    "2024-11-05",
+    "2024-11-05"
+   ],
+   "keywords": [
+    "hartmann"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "pension",
+   "window": [
+    "1980",
+    "1980"
+   ],
+   "keywords": [
+    "pension"
+   ],
+   "must": true,
+   "vague": false
+  }
+ ],
+ "expect": {
+  "layout": "tree",
+  "granularity": "year"
+ }
+}

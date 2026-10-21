@@ -1,0 +1,49 @@
+{
+ "title": "Harbour Mill",
+ "source_document": "letters.txt",
+ "events": [
+  {
+   "id": "loom",
+   "date": "1887-03-09",
+   "title": "New loom arrives",
+   "source": "p. 1",
+   "quote": "the new loom arrived on the 9th of March"
+  },
+  {
+   "id": "strike",
+   "date": "1887-07-25",
+   "title": "Carders' strike begins",
+   "source": "p. 2",
+   "quote": "The strike began on Monday, 25 July 1887, when the carders walked out over the new pay rates"
+  },
+  {
+   "id": "meet",
+   "date": "1887-07-28",
+   "title": "Hale meets the strikers",
+   "source": "p. 2",
+   "quote": "Mr. Hale finally met the carders on Thursday 28 July",
+   "derived": true
+  },
+  {
+   "id": "fire",
+   "date": "1887-11-12",
+   "title": "Mill destroyed by fire",
+   "source": "p. 3",
+   "quote": "The mill burned on the night of 12 November 1888"
+  },
+  {
+   "id": "rebuild",
+   "date": "1889",
+   "title": "Rebuilding planned",
+   "source": "p. 1",
+   "approximate": true,
+   "quote": "Father means to rebuild in the spring"
+  },
+  {
+   "id": "roof",
+   "date": "1887",
+   "title": "Second shed to be roofed",
+   "source": "p. 1"
+  }
+ ]
+}

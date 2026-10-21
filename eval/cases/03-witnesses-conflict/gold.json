@@ -1,0 +1,118 @@
+{
+ "id": "03-witnesses-conflict",
+ "prompt": "Here are two witness statements and the police dispatch log. Merge them into one chronology and tell me where the accounts disagree.",
+ "inputs": [
+  "dispatch-log.csv",
+  "statement-chen.txt",
+  "statement-ortiz.txt"
+ ],
+ "should_trigger": true,
+ "events": [
+  {
+   "key": "locked",
+   "window": [
+    "2025-11-08T18:15",
+    "2025-11-08T18:15"
+   ],
+   "keywords": [
+    "lock"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "glass",
+   "window": [
+    "2025-11-08T23:15",
+    "2025-11-08T23:45"
+   ],
+   "keywords": [
+    "glass"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "call",
+   "window": [
+    "2025-11-08T23:30",
+    "2025-11-08T23:52"
+   ],
+   "keywords": [
+    "call"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "on-scene",
+   "window": [
+    "2025-11-09T00:07",
+    "2025-11-09T00:07"
+   ],
+   "keywords": [
+    "scene",
+    "unit"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "owner-returns",
+   "window": [
+    "2025-11-09T07:30",
+    "2025-11-09T08:30"
+   ],
+   "keywords": [
+    "came back",
+    "return",
+    "owner"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "reported-stolen",
+   "window": [
+    "2025-11-09T08:20",
+    "2025-11-09T08:20"
+   ],
+   "keywords": [
+    "report",
+    "stolen"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "theft",
+   "window": [
+    "2025-11-08T18:15",
+    "2025-11-09T08:00"
+   ],
+   "keywords": [
+    "e-bike",
+    "gone",
+    "stolen"
+   ],
+   "must": false,
+   "vague": true
+  }
+ ],
+ "expect": {
+  "issues": [
+   {
+    "kind": "conflict",
+    "keywords": [
+     "call"
+    ]
+   }
+  ],
+  "answer_patterns": [
+   "(?i)(11:30|23:30)[\\s\\S]{0,200}(11:52|23:52)|(11:52|23:52)[\\s\\S]{0,200}(11:30|23:30)"
+  ],
+  "behaviours": [
+   "merge_ids"
+  ]
+ }
+}

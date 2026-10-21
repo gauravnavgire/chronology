@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CHRONOLOGY — timelines that don't invent dates</title>
+<meta name="description" content="An Agent Skill and Python CLI that turns documents, logs and tables into checked chronologies: date windows, source conflicts, consistency checks, 8 calendars including the Hindu panchang.">
+<style>
+:root{--bg:#fbfaf7;--panel:#fff;--ink:#1d1d1f;--muted:#5f5f66;--line:#e3e1db;--accent:#2f6fde;--accent-soft:#e8effc;--code:#f3f2ee}
+@media (prefers-color-scheme:dark){:root{--bg:#141416;--panel:#1d1d20;--ink:#ececee;--muted:#a0a0a8;--line:#2e2e33;--accent:#7aa5f5;--accent-soft:#1f2a40;--code:#26262b}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:960px;margin:0 auto;padding:48px 16px 80px}
+h1{font-size:clamp(1.9rem,4vw,2.6rem);line-height:1.15;margin:0 0 12px}
+h2{font-size:1.3rem;margin:48px 0 12px}
+p.lead{font-size:1.15rem;color:var(--muted);max-width:44em;margin:0 0 24px}
+a{color:var(--accent)}
+.buttons{display:flex;flex-wrap:wrap;gap:10px}
+.btn{display:inline-block;padding:10px 16px;border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--ink);text-decoration:none;font-weight:600}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.card{display:block;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;text-decoration:none;color:var(--ink)}
+.card:hover{border-color:var(--accent)}
+.card b{display:block;margin-bottom:4px}
+.card span{color:var(--muted);font-size:.92rem}
+pre{background:var(--code);border:1px solid var(--line);border-radius:10px;padding:12px 14px;overflow-x:auto;font-size:.88rem}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+ul.facts{padding-left:1.2em}
+ul.facts li{margin:4px 0}
+footer{margin-top:56px;color:var(--muted);font-size:.9rem}
+</style>
+</head>
+<body>
+<main>
+  <h1>Timelines that don't invent dates</h1>
+  <p class="lead">CHRONOLOGY is an Agent Skill and a Python command-line tool. It turns notes, PDFs,
+  books, logs and tables into checked chronologies. Vague dates stay vague, sources that disagree
+  are flagged, contradictions are reported, and every event is checked against the source's own words.</p>
+  <div class="buttons">
+    <a class="btn primary" href="demo/multi-source.html">Try the interactive demo</a>
+    <a class="btn" href="https://github.com/gauravnavgire/chronology">View on GitHub</a>
+    <a class="btn" href="https://github.com/gauravnavgire/chronology/releases/latest">Download the skill</a>
+  </div>
+
+  <h2>Interactive examples</h2>
+  <div class="grid">
+    <a class="card" href="demo/multi-source.html"><b>Three sources, one timeline</b><span>A witness, a police log and a newspaper merged, with the conflict and consistency errors highlighted.</span></a>
+    <a class="card" href="demo/calendars.html"><b>Eight calendars</b><span>Julian, Hijri, Hebrew, Japanese eras, regnal and fiscal years, and the Hindu panchang, computed from the Sun and Moon.</span></a>
+    <a class="card" href="demo/story.html"><b>Told vs. happened</b><span>A novel's flashbacks and flash-forwards, mapped. Open the "As told" view.</span></a>
+    <a class="card" href="demo/verify.html"><b>Self-check</b><span>Four planted errors (an invented quote, a misquote, a wrong year, a wrong page), all caught.</span></a>
+    <a class="card" href="demo/project.html"><b>What slipped?</b><span>Planned vs. actual milestones, asked "as of 1 April".</span></a>
+    <a class="card" href="demo/incident.html"><b>Incident timeline</b><span>A to-the-second postmortem timeline with confidence scores.</span></a>
+    <a class="card" href="demo/incremental.html"><b>What changed?</b><span>A second run that reports new events, corrected dates and new contradictions.</span></a>
+    <a class="card" href="demo/apollo11.html"><b>Apollo 11</b><span>The basics: zoom from century down to second, search, filter.</span></a>
+  </div>
+
+  <h2>Why</h2>
+  <ul class="facts">
+    <li>Ask a chatbot for a timeline and a date known only as "July 1969" quietly becomes 16 July.
+        Here it stays a month, and the order between it and 16 July is marked as uncertain (≈).</li>
+    <li>Shakespeare and Cervantes both "died on 23 April 1616", eleven days apart. One date is Julian, the other Gregorian.
+        Calendar-aware sorting gets that right.</li>
+    <li>Three accounts give 14:02, 14:10 and the next day for the same meeting. You see all three, flagged ⚠, not one picked at random.</li>
+  </ul>
+
+  <h2>Install</h2>
+  <pre><code># Claude.ai / Claude Desktop: download chronology.zip from the latest release,
+# then Customize → Skills → upload.
+
+# Claude Code (personal skill)
+git clone https://github.com/gauravnavgire/chronology
+cp -r chronology/chronology ~/.claude/skills/
+
+# Command line, no Claude needed (Python 3.9+, standard library only)
+python chronology/chronology/scripts/chronology.py events.json -g day -l tree</code></pre>
+
+  <footer>MIT licensed · <a href="https://github.com/gauravnavgire/chronology">github.com/gauravnavgire/chronology</a></footer>
+</main>
+</body>
+</html>

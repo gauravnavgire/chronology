@@ -1,0 +1,9 @@
+order_id,order_date,customer,item,amount,status
+A-1001,03/02/2024,Patel,Desk lamp,24.99,shipped
+A-1002,14/02/2024,Okafor,Office chair,189.00,shipped
+A-1003,14/02/2024,Patel,Monitor arm,59.50,returned
+A-1004,29/02/2024,Novak,Standing desk,420.00,shipped
+A-1005,05/03/2024,Okafor,Cable tray,15.00,shipped
+A-1006,25/03/2024,Novak,Desk mat,19.99,cancelled
+A-1007,not recorded,Patel,Footrest,34.00,shipped
+A-1008,02/04/2024,Lindqvist,Webcam,79.00,shipped

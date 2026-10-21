@@ -1,0 +1,102 @@
+{
+ "id": "06-incident-log",
+ "prompt": "Here's the alert log export and my notes from yesterday's outage. Build the incident timeline for the postmortem.",
+ "inputs": [
+  "alerts.csv",
+  "notes.md"
+ ],
+ "should_trigger": true,
+ "events": [
+  {
+   "key": "deploy",
+   "window": [
+    "2025-09-17T14:02Z",
+    "2025-09-17T14:03Z"
+   ],
+   "keywords": [
+    "deploy"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "pool",
+   "window": [
+    "2025-09-17T14:00Z",
+    "2025-09-17T14:07Z"
+   ],
+   "keywords": [
+    "pool"
+   ],
+   "must": true,
+   "vague": true
+  },
+  {
+   "key": "errors",
+   "window": [
+    "2025-09-17T14:06Z",
+    "2025-09-17T14:10Z"
+   ],
+   "keywords": [
+    "503",
+    "error"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "paged",
+   "window": [
+    "2025-09-17T14:09Z",
+    "2025-09-17T14:10Z"
+   ],
+   "keywords": [
+    "page"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "rollback",
+   "window": [
+    "2025-09-17T14:21Z",
+    "2025-09-17T14:22Z"
+   ],
+   "keywords": [
+    "rollback"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "recovered",
+   "window": [
+    "2025-09-17T14:27Z",
+    "2025-09-17T14:28Z"
+   ],
+   "keywords": [
+    "baseline"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "all-clear",
+   "window": [
+    "2025-09-17T14:40Z",
+    "2025-09-17T14:41Z"
+   ],
+   "keywords": [
+    "clear"
+   ],
+   "must": true,
+   "vague": false
+  }
+ ],
+ "expect": {
+  "behaviours": [
+   "table_input",
+   "hedged"
+  ]
+ }
+}

@@ -1,0 +1,46 @@
+name: pages
+
+# Publishes docs/ plus the interactive example timelines as the project site.
+# One-time setup: repository Settings -> Pages -> Source: "GitHub Actions".
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Assemble site (landing page + example HTML timelines)
+        run: |
+          mkdir -p site/demo
+          cp -r docs/. site/
+          cp chronology/examples/multi-source/chronology.html site/demo/multi-source.html
+          cp chronology/examples/calendars/chronology.html     site/demo/calendars.html
+          cp chronology/examples/story/chronology.html         site/demo/story.html
+          cp chronology/examples/incremental/chronology.html   site/demo/incremental.html
+          cp chronology/examples/presets/project-asof.html     site/demo/project.html
+          cp chronology/examples/presets/incident.html         site/demo/incident.html
+          cp chronology/examples/verify/chronology.html        site/demo/verify.html
+          cp chronology/examples/output-html-day.html          site/demo/apollo11.html
+          touch site/.nojekyll
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+      - id: deployment
+        uses: actions/deploy-pages@v4

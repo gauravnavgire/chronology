@@ -1,0 +1,62 @@
+[
+ {
+  "id": "t01",
+  "prompt": "Put these events in order: the bridge opened in 1932, construction began in 1923, and the design competition was held in 1921.",
+  "should_trigger": true
+ },
+ {
+  "id": "t02",
+  "prompt": "What happened when in this text? 'On 3 May we signed; two weeks later the money arrived; the project started on 1 June.'",
+  "should_trigger": true
+ },
+ {
+  "id": "t03",
+  "prompt": "Does this sequence add up? 'He was born in 1950, retired in 1985 at age 40, and started his first job in 1972.'",
+  "should_trigger": true
+ },
+ {
+  "id": "t04",
+  "prompt": "Convert Samvat 2081 Chaitra shukla 9 to a Gregorian date.",
+  "should_trigger": true
+ },
+ {
+  "id": "t05",
+  "prompt": "Make a timeline of these notes by month: Jan 2024 hired Ana; March 2024 launched v2; Feb 2024 office move.",
+  "should_trigger": true
+ },
+ {
+  "id": "t06",
+  "prompt": "Here are three accounts of the meeting with different times — which is right and where do they disagree? A: 2pm. B: 2:30pm. C: around 3.",
+  "should_trigger": true
+ },
+ {
+  "id": "t07",
+  "prompt": "What's today's date?",
+  "should_trigger": false
+ },
+ {
+  "id": "t08",
+  "prompt": "Write a React component that renders a vertical timeline.",
+  "should_trigger": false
+ },
+ {
+  "id": "t09",
+  "prompt": "Summarize this paragraph: 'The committee met to discuss the budget and agreed to postpone a decision.'",
+  "should_trigger": false
+ },
+ {
+  "id": "t10",
+  "prompt": "Convert 250 euros to US dollars.",
+  "should_trigger": false
+ },
+ {
+  "id": "t11",
+  "prompt": "Sort this list alphabetically: pear, apple, mango.",
+  "should_trigger": false
+ },
+ {
+  "id": "t12",
+  "prompt": "Write a cron expression for every Monday at 9am.",
+  "should_trigger": false
+ }
+]

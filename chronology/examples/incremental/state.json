@@ -1,0 +1,71 @@
+{
+ "version": 1,
+ "created": "2026-10-21T11:08:11",
+ "files": {
+  "witness.txt": "p7",
+  "police-log.csv": "row 43"
+ },
+ "events": {
+  "id:born": {
+   "title": "Smith born",
+   "date": "2 Mar 1950",
+   "sources": 2,
+   "conflict": false
+  },
+  "id:wed": {
+   "title": "Smith marries",
+   "date": "1970s, between 1975 and 1979",
+   "sources": 1,
+   "conflict": false
+  },
+  "id:tweet": {
+   "title": "Smith tweets",
+   "date": "1990",
+   "sources": 1,
+   "conflict": false
+  },
+  "id:report": {
+   "title": "Report filed",
+   "date": "11 Jun 1998",
+   "sources": 1,
+   "conflict": false
+  },
+  "id:meet": {
+   "title": "Smith meets Jones",
+   "date": "12 Jun 1998 14:02",
+   "sources": 2,
+   "conflict": true
+  },
+  "id:call": {
+   "title": "Phone call",
+   "date": "15 Jun 1998",
+   "sources": 1,
+   "conflict": false
+  },
+  "id:followup": {
+   "title": "Follow-up visit",
+   "date": "19 Jun 1998",
+   "sources": 1,
+   "conflict": false
+  },
+  "id:died": {
+   "title": "Smith dies",
+   "date": "10 May 2001",
+   "sources": 1,
+   "conflict": false
+  },
+  "id:letter": {
+   "title": "Letter signed by Smith",
+   "date": "2003",
+   "sources": 1,
+   "conflict": false
+  }
+ },
+ "issues": [
+  "ERROR [anachronism] 'Smith tweets' (1990) is before Mar 2006, the earliest it could be: Twitter launched March 2006",
+  "ERROR [offset] 'Phone call' (15 Jun 1998) is stated, but +2 days from 'Smith meets Jones' (12 Jun 1998 14:02) gives 14 Jun 1998",
+  "ERROR [order] 'Report filed' (11 Jun 1998) should be after 'Smith meets Jones' (12 Jun 1998 14:02) but is entirely before it",
+  "WARNING [conflict] 'Smith meets Jones' - sources disagree: p3 · witness.txt: 12 Jun 1998 14:02; row 41 · police-log.csv: 12 Jun 1998 14:10",
+  "WARNING [lifespan] 'Letter signed by Smith' (2003) involves Smith after 'Smith dies' (10 May 2001) (posthumous or legacy?)"
+ ]
+}

@@ -1,0 +1,9 @@
+{"title":"Smith case","source_document":"witness.txt","events":[
+ {"id":"born","date":"1950-03-02","title":"Smith born","entities":["Smith"],"lifespan":{"entity":"Smith","boundary":"start"},"source":"p1"},
+ {"id":"died","date":"2001-05-10","title":"Smith dies","entities":["Smith"],"lifespan":{"entity":"Smith","boundary":"end"},"source":"p2"},
+ {"id":"meet","date":"1998-06-12T14:02","title":"Smith meets Jones","entities":["Smith"],"source":"p3"},
+ {"id":"call","date":"1998-06-15","title":"Phone call","offset":{"from":"meet","by":"2d"},"source":"p4"},
+ {"id":"letter","date":"2003","title":"Letter signed by Smith","entities":["Smith"],"source":"p5"},
+ {"id":"tweet","date":"1990","title":"Smith tweets","not_before":"2006-03","reason":"Twitter launched March 2006","source":"p6"},
+ {"id":"wed","date":"1970s","earliest":"1975","latest":"1979","title":"Smith marries","source":"p7"}
+]}

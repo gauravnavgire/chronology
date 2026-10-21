@@ -1,0 +1,94 @@
+{
+ "id": "04-diary-vague-dates",
+ "prompt": "Make a year-by-year timeline of this diary as bullet points.",
+ "inputs": [
+  "diary.md"
+ ],
+ "should_trigger": true,
+ "events": [
+  {
+   "key": "bank",
+   "window": [
+    "1952-01-03",
+    "1952-01-03"
+   ],
+   "keywords": [
+    "bank"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "illness",
+   "window": [
+    "1952-04-15",
+    "1952-06-14"
+   ],
+   "keywords": [
+    "illness",
+    "doctor"
+   ],
+   "must": true,
+   "vague": true
+  },
+  {
+   "key": "father-died",
+   "window": [
+    "1952-06-14",
+    "1952-06-14"
+   ],
+   "keywords": [
+    "died"
+   ],
+   "must": true,
+   "vague": false
+  },
+  {
+   "key": "met-edith",
+   "window": [
+    "1952-09-01",
+    "1952-11-30"
+   ],
+   "keywords": [
+    "edith",
+    "met"
+   ],
+   "must": true,
+   "vague": true
+  },
+  {
+   "key": "engaged",
+   "window": [
+    "1952-12-10",
+    "1953-01-10"
+   ],
+   "keywords": [
+    "engaged"
+   ],
+   "must": true,
+   "vague": true
+  },
+  {
+   "key": "married",
+   "window": [
+    "1953-02",
+    "1953-02"
+   ],
+   "keywords": [
+    "married"
+   ],
+   "must": true,
+   "vague": true
+  }
+ ],
+ "undated": [
+  [
+   "repay",
+   "tom"
+  ]
+ ],
+ "expect": {
+  "layout": "bullets",
+  "granularity": "year"
+ }
+}

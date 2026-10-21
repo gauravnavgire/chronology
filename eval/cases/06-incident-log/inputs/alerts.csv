@@ -1,0 +1,35 @@
+timestamp,severity,service,message
+1758117731,info,payments,deploy payments v3.2 started
+1758118000,error,checkout,HTTP 503 from payments upstream
+1758118006,error,checkout,HTTP 503 from payments upstream
+1758118012,error,checkout,HTTP 503 from payments upstream
+1758118018,error,checkout,HTTP 503 from payments upstream
+1758118024,error,checkout,HTTP 503 from payments upstream
+1758118030,error,checkout,HTTP 503 from payments upstream
+1758118036,error,checkout,HTTP 503 from payments upstream
+1758118042,error,checkout,HTTP 503 from payments upstream
+1758118048,error,checkout,HTTP 503 from payments upstream
+1758118054,error,checkout,HTTP 503 from payments upstream
+1758118060,error,checkout,HTTP 503 from payments upstream
+1758118066,error,checkout,HTTP 503 from payments upstream
+1758118072,error,checkout,HTTP 503 from payments upstream
+1758118078,error,checkout,HTTP 503 from payments upstream
+1758118084,error,checkout,HTTP 503 from payments upstream
+1758118090,error,checkout,HTTP 503 from payments upstream
+1758118096,error,checkout,HTTP 503 from payments upstream
+1758118102,error,checkout,HTTP 503 from payments upstream
+1758118108,error,checkout,HTTP 503 from payments upstream
+1758118114,error,checkout,HTTP 503 from payments upstream
+1758118120,error,checkout,HTTP 503 from payments upstream
+1758118126,error,checkout,HTTP 503 from payments upstream
+1758118132,error,checkout,HTTP 503 from payments upstream
+1758118138,error,checkout,HTTP 503 from payments upstream
+1758118144,error,checkout,HTTP 503 from payments upstream
+1758118150,error,checkout,HTTP 503 from payments upstream
+1758118156,error,checkout,HTTP 503 from payments upstream
+1758118162,error,checkout,HTTP 503 from payments upstream
+1758118168,error,checkout,HTTP 503 from payments upstream
+1758118174,error,checkout,HTTP 503 from payments upstream
+1758118142,warn,pager,on-call paged: checkout error rate > 20%
+1758118897,info,payments,rollback to v3.1 started
+1758119225,info,checkout,error rate back to baseline
