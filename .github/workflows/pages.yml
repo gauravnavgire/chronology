@@ -24,7 +24,7 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Assemble site (landing page + example HTML timelines)
         run: |
           mkdir -p site/demo
@@ -37,10 +37,9 @@ jobs:
           cp chronology/examples/presets/incident.html         site/demo/incident.html
           cp chronology/examples/verify/chronology.html        site/demo/verify.html
           cp chronology/examples/output-html-day.html          site/demo/apollo11.html
-          touch site/.nojekyll
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/configure-pages@v6
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: site
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
