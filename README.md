@@ -98,10 +98,20 @@ See the **[full guide](docs/GUIDE.md)** for details and examples.
   - the Ram Navami and Holi tithi timings match to within about 2 minutes
   - historical records are reproduced: Shivaji's coronation in 1674 and
     Gandhi's birth tithi in 1869
-- **An evaluation kit** ([`eval/`](eval/)) runs real Claude sessions on 14
-  realistic documents with answer keys. It scores whether the skill
-  triggers, recall, precision, date accuracy and self-check use.
-  *Full results: coming soon.*
+- **Real Claude sessions** on 14 test documents with answer keys
+  ([full results](eval/RESULTS.md)). Where the skill ran:
+
+  | | Result |
+  |---|---|
+  | Events found | **98 of 99** (every must-have event) |
+  | Dates exactly right | **97 of 98** |
+  | Vague dates given false precision | **0** |
+  | Events with a source quote | **100%** |
+  | Used when it should be (12 test prompts) | **4 of 6**, with **0 of 6** false triggers |
+
+  The test documents were written for the evaluation, and each prompt ran
+  once, so treat these as indicative. The [evaluation kit](eval/) can be
+  re-run, and real-world test cases are welcome.
 - **Known limits:** Claude still does the reading, so a missed date is still
   missed. The self-check catches invented and misquoted events, not missing
   ones. Hindu solar calendars and the Chinese calendar aren't supported yet.
