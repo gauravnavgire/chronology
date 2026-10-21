@@ -82,6 +82,10 @@ def run_one(run_dir, prompt, meta, a):
                  r"not logged in|oauth token has expired", text):
         raise SystemExit("Authentication failed in %s: fix the API key / login and "
                          "re-run (see transcript.jsonl). Stopping the batch." % run_dir)
+    if re.search(r"(?i)hit your (session|usage|weekly) limit|rate_limit_error|"
+                 r"usage limit reached", text):
+        raise SystemExit("Usage limit reached in %s: re-run the remaining cases after it "
+                         "resets (use --cases / --probes). Stopping the batch." % run_dir)
 
 
 def main(argv=None):
